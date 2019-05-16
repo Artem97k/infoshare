@@ -1,24 +1,26 @@
 class UsersController < ApplicationController
-	include BCrypt
 	def index
 		render json: User.all
-	end
-
-	def read
-		@user = User.find_by(login: params[:login])
-		if @user.password == params[:password]
-			render json: { pwd: @user.password, token: @user.issue_token, decoded_token: @user.decode_token, status: "ok" }
-		else
-			render json: { status: "not ok" }
-		end
 	end
 
 	def create
 		@user = User.new(login: params[:login], password: params[:password])
 		if @user.save
-			render json: { login: @user.login, pwd: @user.password, created: @user.created_at, token: @user.issue_token, decoded_token: @user.decode_token }
+			render json: { id: @user.id, login: @user.login, pwd: @user.password, created: @user.created_at, status: "Ok" }
 		else
-			render json: { errors: "Invalid user parameters" }
+			render json: { status: "New user was not created", error: "Invalid user parameters" }
+    	end
+	end
+
+	def read
+		if @user = User.find_by(login: params[:login])
+			if @user.password == params[:password]
+				render json: { login: @user.login, created: @user.created_at, status: "Ok" }
+			else
+				render json: { status: "User was not read", error: "Incorrect password" }
+    		end
+    	else
+    		render json: { status: "User was not read", error: "User record with given login not found" }
     	end
 	end
 
@@ -26,15 +28,15 @@ class UsersController < ApplicationController
 		if @user = User.find_by(login: params[:login])
 			if @user.password == params[:password]
 				if @user.update(login: params[:login], password: params[:new_password])
-					render json: { status: 'Updated succesfully' }
+					render json: { status: 'Ok' }
 				else
-					render json: { status: 'Invalid user parameters'}
+					render json: { status: "User was not updated", error: "Invalid user parameters" }
 				end
 			else
-				render json: { status: "Can't update, wrong password" }
+				render json: { status: "User was not updated", error: "Incorrect password" }
     		end
     	else
-    		render json: { status: "Can't find user" }
+    		render json: { status: "User was not updated", error: "User record with given login not found" }
     	end
 	end
 
@@ -42,11 +44,24 @@ class UsersController < ApplicationController
 		if @user = User.find_by(login: params[:login])
 			if @user.password == params[:password]
 				@user.destroy
+				render json: { status: 'Ok' }
 			else
-				render json: { status: "Can't delete, wrong password" }
+				render json: { status: "User was not deleted", error: "Incorrect password" }
     		end
     	else
-    		render json: { status: "Can't find user" }
+    		render json: { status: "User was not deleted", error: "User record with given login not found" }
+    	end
+	end
+
+	def auth
+		if @user = User.find_by(login: params[:login])
+			if @user.password == params[:password]
+				render json: @user.issue_token
+			else
+				render json: { status: "Can't authorize client", error: "Incorrect password" }
+    		end
+    	else
+    		render json: { status: "Can't authorize client", error: "User record with given login not found" }
     	end
 	end
 
