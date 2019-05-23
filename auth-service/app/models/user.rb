@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 	include BCrypt
 
-	@@key = Rails.application.secrets.secret_key_base.to_s
+	@@key = "my_super_secure_key"
 
 	validates :login, :presence => true, :length => { :in => 5..20 }, :uniqueness => true
 
