@@ -6,21 +6,30 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(login: params[:login], password: params[:password])
 		if @user.save
-			render json: { id: @user.id, login: @user.login, pwd: @user.password, created: @user.created_at, status: "Ok" }
+			render json: { id: @user.id,
+						   login: @user.login,
+						   pwd: @user.password,
+						   created_at: @user.created_at,
+						   status: "Ok" }
 		else
-			render json: { status: "New user was not created", error: "Invalid user parameters" }
+			render json: { status: "New user was not created",
+						   error: "Invalid user parameters" }
     	end
 	end
 
 	def read
 		if @user = User.find_by(login: params[:login])
 			if @user.password == params[:password]
-				render json: { login: @user.login, created: @user.created_at, status: "Ok" }
+				render json: { login: @user.login,
+							   created_at: @user.created_at,
+							   status: "Ok" }
 			else
-				render json: { status: "User was not read", error: "Incorrect password" }
+				render json: { status: "User was not read",
+							   error: "Incorrect password" }
     		end
     	else
-    		render json: { status: "User was not read", error: "User record with given login not found" }
+    		render json: { status: "User was not read",
+    					   error: "User record with given login not found" }
     	end
 	end
 
@@ -30,13 +39,16 @@ class UsersController < ApplicationController
 				if @user.update(login: params[:login], password: params[:new_password])
 					render json: { status: 'Ok' }
 				else
-					render json: { status: "User was not updated", error: "Invalid user parameters" }
+					render json: { status: "User was not updated",
+								   error: "Invalid user parameters" }
 				end
 			else
-				render json: { status: "User was not updated", error: "Incorrect password" }
+				render json: { status: "User was not updated",
+							   error: "Incorrect password" }
     		end
     	else
-    		render json: { status: "User was not updated", error: "User record with given login not found" }
+    		render json: { status: "User was not updated",
+    					   error: "User record with given login not found" }
     	end
 	end
 
@@ -46,22 +58,27 @@ class UsersController < ApplicationController
 				@user.destroy
 				render json: { status: 'Ok' }
 			else
-				render json: { status: "User was not deleted", error: "Incorrect password" }
+				render json: { status: "User was not deleted",
+							   error: "Incorrect password" }
     		end
     	else
-    		render json: { status: "User was not deleted", error: "User record with given login not found" }
+    		render json: { status: "User was not deleted",
+    					   error: "User record with given login not found" }
     	end
 	end
 
 	def auth
 		if @user = User.find_by(login: params[:login])
 			if @user.password == params[:password]
-				render json: @user.issue_token
+				render json: { token: @user.issue_token,
+							   status: 'Ok' }
 			else
-				render json: { status: "Can't authorize client", error: "Incorrect password" }
+				render json: { status: "Can't authorize client",
+							   error: "Incorrect password" }
     		end
     	else
-    		render json: { status: "Can't authorize client", error: "User record with given login not found" }
+    		render json: { status: "Can't authorize client",
+    					   error: "User record with given login not found" }
     	end
 	end
 

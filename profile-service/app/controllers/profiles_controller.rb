@@ -15,7 +15,8 @@ class ProfilesController < ApplicationController
 						   bio: @profile.bio,
 						   status: "Ok" }
 		else
-			render json: { status: "New profile was not created", error: "Invalid profile parameters" }
+			render json: { status: "New profile was not created",
+						   error: "Invalid profile parameters" }
     	end
 	end
 
@@ -29,7 +30,8 @@ class ProfilesController < ApplicationController
 						   avatar_id: @profile.avatar_id,
 						   status: "Ok" }
     	else
-    		render json: { status: "Profile was not read", error: "Profile record with given login not found" }
+    		render json: { status: "Profile was not read",
+    					   error: "Profile record with given login not found" }
     	end
 	end
 
@@ -37,7 +39,7 @@ class ProfilesController < ApplicationController
 		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
 		rescue StandardError => error
 
-		if @profile = Profile.find_by(login: params:[login]) #client must provide login param to prevent CSRF attack
+		if @profile = Profile.find_by(login: @login)
 			if @profile.login == @login
 				if @profile.update( name: params[:name], 
 						   			surname: params[:surname], 
@@ -46,13 +48,16 @@ class ProfilesController < ApplicationController
 						   			avatar_id: params[:avatar_id] )
 					render json: { status: 'Ok' }
 				else
-					render json: { status: "Profile was not updated", error: "Invalid profile parameters" }
+					render json: { status: "Profile was not updated",
+								   error: "Invalid profile parameters" }
 				end
 			else
-				render json: { status: "Profile was not updated", error: "Provided JWT doesn't belong to profile's owner" }
+				render json: { status: "Profile was not updated", 
+							   error: "Provided JWT doesn't belong to profile's owner" }
     		end
     	else
-    		render json: { status: "Profile was not updated", error: "Profile record with given login not found" }
+    		render json: { status: "Profile was not updated",
+    					   error: "Profile record with given login not found" }
     	end
 	end
 
@@ -60,15 +65,17 @@ class ProfilesController < ApplicationController
 		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
 		rescue StandardError => error
 
-		if @profile = Profile.find_by(login: params:[login]) #client must provide login param to prevent CSRF attack
+		if @profile = Profile.find_by(login: @login)
 			if @profile.login == @login
 				@profile.destroy
 				render json: { status: "Ok" }
 			else
-				render json: { status: "Profile was not deleted", error: "Provided JWT doesn't belong to profile's owner" }
+				render json: { status: "Profile was not deleted",
+							   error: "Provided JWT doesn't belong to profile's owner" }
     		end
     	else
-    		render json: { status: "Profile was not deleted", error: "Profile record with given login not found" }
+    		render json: { status: "Profile was not deleted", 
+    					   error: "Profile record with given login not found" }
     	end
 	end
 
