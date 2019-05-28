@@ -1,22 +1,39 @@
 class ProfilesController < ApplicationController
+	skip_before_action :verify_authenticity_token
 	@@key = "my_super_secure_key"
 
+	before_action :set_token, except: [:read]
+
+	def set_token
+		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
+		rescue StandardError => @error
+		render json: { status: 'Bad token, try reloading page or reauthoirize', 
+					   error: @error }
+	end
+
 	def create
-		@profile = Profile.new( login: params[:login], 
-						   		name: params[:name], 
-						   		surname: params[:surname], 
-						   		email: params[:email], 
-						   		bio: params[:bio] )
-		if @profile.save
-			render json: { login: @profile.login,
-						   name: @profile.name, 
-						   surname: @profile.surname, 
-						   email: @profile.email, 
-						   bio: @profile.bio,
-						   status: "Ok" }
-		else
-			render json: { status: "New profile was not created",
-						   error: "Invalid profile parameters" }
+		if @login == params[:login]
+			@profile = Profile.new( login: params[:login], 
+							   		name: params[:name], 
+								   	surname: params[:surname], 
+							   		email: params[:email], 
+							   		bio: params[:bio],
+							   		avatar_id: params[:avatar_id] )
+			if @profile.save
+				render json: { login: @profile.login,
+							   name: @profile.name,
+							   surname: @profile.surname, 
+							   email: @profile.email, 
+							   bio: @profile.bio,
+							   avatar_id: @profile.avatar_id,
+							   status: "Ok" }
+			else
+				render json: { status: "New profile was not created",
+							   error: "Invalid profile parameters" }
+    		end
+    	else
+    		ender json: { status: "New profile was not created",
+						  error: "Invalid user token" }
     	end
 	end
 
@@ -36,9 +53,6 @@ class ProfilesController < ApplicationController
 	end
 
 	def update
-		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
-		rescue StandardError => error
-
 		if @profile = Profile.find_by(login: @login)
 			if @profile.login == @login
 				if @profile.update( name: params[:name], 
@@ -53,7 +67,7 @@ class ProfilesController < ApplicationController
 				end
 			else
 				render json: { status: "Profile was not updated", 
-							   error: "Provided JWT doesn't belong to profile's owner" }
+							   error: "Provided token doesn't belong to profile's owner" }
     		end
     	else
     		render json: { status: "Profile was not updated",
@@ -62,16 +76,13 @@ class ProfilesController < ApplicationController
 	end
 
 	def delete
-		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
-		rescue StandardError => error
-
 		if @profile = Profile.find_by(login: @login)
 			if @profile.login == @login
 				@profile.destroy
 				render json: { status: "Ok" }
 			else
 				render json: { status: "Profile was not deleted",
-							   error: "Provided JWT doesn't belong to profile's owner" }
+							   error: "Provided token doesn't belong to profile's owner" }
     		end
     	else
     		render json: { status: "Profile was not deleted", 

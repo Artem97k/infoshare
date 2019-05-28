@@ -1,17 +1,25 @@
 class AuthController < ApplicationController
+	before_action :set_auth_url
+
+	def set_auth_url
+		@service_url = 'http://localhost:3001/'
+	end
+
 	def sign_up
-		RestClient.post('http://localhost:3001/create', { login: params[:login], 
-														  password: params[:password] } ) { |response, request, result|
-			@r = response
-		}
+		RestClient.post( @service_url + 'create', 
+						{ login: params[:login],
+						  password: params[:password] } ) do |response, request, result|
+			@r = JSON.parse(response).with_indifferent_access
+		end
 		render json: @r
 	end
 
 	def log_in
-		RestClient.post('http://localhost:3001/auth', { login: params[:login], 
-														  password: params[:password] } ) { |response, request, result|
+		RestClient.post( @service_url + 'auth',
+						{ login: params[:login], 
+						  password: params[:password] } ) do |response, request, result|
 			@r = JSON.parse(response).with_indifferent_access
-		}
+		end
 		if @r[:status] == "Ok"
 			session[:token] = @r[:token]
 			render json: { status: 'Ok',
