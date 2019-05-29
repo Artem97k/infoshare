@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   get 'profile', 		 to: 'profile#read'
   put 'profile/update',  to: 'profile#update'
   post 'profile/delete', to: 'profile#delete'
+
+  post 'article/create', to: 'article#create'
+  get 'article', 		 to: 'article#read'
+  put 'article/update',  to: 'article#update'
+  post 'article/delete', to: 'article#delete'
 end
