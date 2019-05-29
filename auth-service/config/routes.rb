@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   put 'update', to: 'users#update'
   post 'delete', to: 'users#delete'
   post 'auth', to: 'users#auth'
+  get 'index', to: 'users#index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

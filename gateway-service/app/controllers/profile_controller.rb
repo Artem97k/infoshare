@@ -20,7 +20,7 @@ class ProfileController < ApplicationController
 	end
 
 	def read
-		RestClient.get(@service_url + 'read', { login: params[:login] } ) do |response, request, result|
+		RestClient.get(@service_url + 'read?' + "login=#{params[:login]}" ) do |response, request, result|
 			@r = response
 		end
 		render json: @r

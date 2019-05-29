@@ -2,12 +2,16 @@ class ProfilesController < ApplicationController
 	skip_before_action :verify_authenticity_token
 	@@key = "my_super_secure_key"
 
-	before_action :set_token, except: [:read]
+	before_action :set_token, except: [:read, :index]
+
+	def index
+		render json: Profile.all
+	end
 
 	def set_token
 		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
 		rescue StandardError => @error
-		render json: { status: 'Bad token, try reloading page or reauthoirize', 
+		render json: { status: 'Could not decode token, please reauthoirize', 
 					   error: @error }
 	end
 
@@ -32,7 +36,7 @@ class ProfilesController < ApplicationController
 							   error: "Invalid profile parameters" }
     		end
     	else
-    		ender json: { status: "New profile was not created",
+    		render json: { status: "New profile was not created",
 						  error: "Invalid user token" }
     	end
 	end
