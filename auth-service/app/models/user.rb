@@ -14,7 +14,7 @@ class User < ApplicationRecord
 	end
 
 	def issue_token
-		JWT.encode(self.login, @@key, 'HS256')
+		JWT.encode({ 'login': self.login, 'id': self.id }, @@key, 'HS256')
 	end
 
 	def decode_token

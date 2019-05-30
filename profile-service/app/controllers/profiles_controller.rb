@@ -9,10 +9,12 @@ class ProfilesController < ApplicationController
 	end
 
 	def set_token
-		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
+		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]['login']
 		rescue StandardError => @error
-		render json: { status: 'Could not decode token, please reauthoirize', 
-					   error: @error }
+		if @error
+			render json: { status: 'Could not decode token, please reauthoirize', 
+						   error: @error }
+		end
 	end
 
 	def create

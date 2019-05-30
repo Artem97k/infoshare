@@ -17,7 +17,7 @@ class ArticleController < ApplicationController
 	end
 
 	def read
-		RestClient.get(@service_url + 'read?' + "article_id=#{params[:article_id]}" ) do |response, request, result|
+		RestClient.get(@service_url + 'read?' + "id=#{params[:id]}" ) do |response, request, result|
 			@r = response
 		end
 		render json: @r
@@ -26,6 +26,7 @@ class ArticleController < ApplicationController
 	def update
 		RestClient.put(@service_url + 'update',
 						{ token: session[:token],
+						  id: params[:id],
 						  series_id: params[:series_id],
 						  name: params[:name],
 						  content: params[:content] } ) do |response, request, result|
@@ -37,7 +38,7 @@ class ArticleController < ApplicationController
 	def delete
 		RestClient.post(@service_url + 'delete',
 						{ token: session[:token],
-						  article_id: params[:article_id] } ) do |response, request, result|
+						  id: params[:id] } ) do |response, request, result|
 			@r = response
 		end
 		render json: @r

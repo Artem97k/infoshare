@@ -12,4 +12,14 @@ Rails.application.routes.draw do
   get 'article', 		 to: 'article#read'
   put 'article/update',  to: 'article#update'
   post 'article/delete', to: 'article#delete'
+
+  post 'series/create', to: 'series#create'
+  get 'series', 		 to: 'series#read'
+  put 'series/update',  to: 'series#update'
+  post 'series/delete', to: 'series#delete'
+
+  post 'comment/create', to: 'comment#create'
+  get 'comment', 		 to: 'comment#read'
+  put 'comment/update',  to: 'comment#update'
+  post 'comment/delete', to: 'comment#delete'
 end

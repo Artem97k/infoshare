@@ -9,84 +9,80 @@ class ArticlesController < ApplicationController
 	end
 
 	def set_token
-		@login = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
+		@token = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
 		rescue StandardError => @error
-		render json: { status: 'Could not decode token, please reauthoirize', 
-					   error: @error }
+		if @error
+			render json: { status: 'Could not decode token, please reauthoirize', 
+						   error: @error }
+		else
+			@login = @token['login']
+			@user_id = @token['id']
+		end
 	end
 
 	def create
 		if @login == params[:login]
-			@profile = Profile.new( login: params[:login], 
-							   		name: params[:name], 
-								   	surname: params[:surname], 
-							   		email: params[:email], 
-							   		bio: params[:bio],
-							   		avatar_id: params[:avatar_id] )
-			if @profile.save
-				render json: { login: @profile.login,
-							   name: @profile.name,
-							   surname: @profile.surname, 
-							   email: @profile.email, 
-							   bio: @profile.bio,
-							   avatar_id: @profile.avatar_id,
+			@article = Article.new( user_id: @user_id
+									series_id: params[:series_id],
+						  			name: params[:name],
+						 			content: params[:content] )
+			if @article.save
+				render json: { user_id: @user_id
+							   series_id: params[:series_id],
+						  	   name: params[:name],
+						  	   content: params[:content],
 							   status: "Ok" }
 			else
-				render json: { status: "New profile was not created",
-							   error: "Invalid profile parameters" }
+				render json: { status: "New article was not created",
+							   error: "Invalid article parameters" }
     		end
     	else
-    		render json: { status: "New profile was not created",
+    		render json: { status: "New article was not created",
 						  error: "Invalid user token" }
     	end
 	end
 
 	def read
-		if @profile = Profile.find_by(login: params[:login])
-			render json: { login: @profile.login, 
-						   name: @profile.name, 
-						   surname: @profile.surname, 
-						   email: @profile.email, 
-						   bio: @profile.bio,
-						   avatar_id: @profile.avatar_id,
+		if @article = Article.find_by(id: params[:id])
+			render json: { series_id: params[:series_id],
+						   name: params[:name],
+						   content: params[:content],
 						   status: "Ok" }
     	else
-    		render json: { status: "Profile was not read",
-    					   error: "Profile record with given login not found" }
+    		render json: { status: "Article was not read",
+    					   error: "Article record with given login not found" }
     	end
 	end
 
 	def update
-		if @profile = Profile.find_by(login: @login)
-			if @profile.login == @login
-				if @profile.update( name: params[:name], 
-						   			surname: params[:surname], 
-						   			email: params[:email], 
-						   			bio: params[:bio],
-						   			avatar_id: params[:avatar_id] )
+		if @article = Article.find_by(id: params[:id])
+			if @article.user_id == @user_id
+				if @article.update( series_id: params[:series_id],
+									name: params[:name],
+									content: params[:content] )
 					render json: { status: 'Ok' }
 				else
-					render json: { status: "Profile was not updated",
-								   error: "Invalid profile parameters" }
+					render json: { status: "Article was not updated",
+								   error: "Invalid article parameters" }
 				end
 			else
-				render json: { status: "Profile was not updated", 
-							   error: "Provided token doesn't belong to profile's owner" }
+				render json: { status: "Article was not updated", 
+							   error: "Provided token doesn't belong to article's owner" }
     		end
     	else
-    		render json: { status: "Profile was not updated",
-    					   error: "Profile record with given login not found" }
+    		render json: { status: "Article was not updated",
+    					   error: "Article record with given login not found" }
     	end
 	end
 
 	def delete
-		if @profile = Profile.find_by(login: @login)
-			if @profile.login == @login
-				@profile.destroy
+		if @article = Article.find_by(id: params[:id])
+			if @article.user_id == @user_id
+				@article.destroy
 				render json: { status: "Ok" }
 			else
-				render json: { status: "Profile was not deleted",
-							   error: "Provided token doesn't belong to profile's owner" }
+				render json: { status: "Article was not deleted",
+							   error: "Provided token doesn't belong to article's owner" }
     		end
     	else
     		render json: { status: "Profile was not deleted", 
@@ -95,6 +91,6 @@ class ArticlesController < ApplicationController
 	end
 
 	def profile_params
-		params.require(:login).permit(:token, :login, :name, :surname, :email, :bio, :avatar_id)
+		params.permit(:token, :id, :series_id, :name, :content )
 	end
 end
