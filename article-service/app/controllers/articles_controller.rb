@@ -39,9 +39,9 @@ class ArticlesController < ApplicationController
 
 	def read
 		if @article = Article.find_by(id: params[:id])
-			render json: { series_id: params[:series_id],
-						   name: params[:name],
-						   content: params[:content],
+			render json: { series_id: @article.series_id,
+						   name: @article.name,
+						   content: @article.content,
 						   status: "Ok" }
     	else
     		render json: { status: "Article was not read",

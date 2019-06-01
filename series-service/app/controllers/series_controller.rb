@@ -37,9 +37,9 @@ class SeriesController < ApplicationController
 
 	def read
 		if @series = Series.find_by(id: params[:id])
-			render json: { series_id: params[:series_id],
-						   name: params[:name],
-						   content: params[:content],
+			render json: { series_id: @article.series_id,
+						   name: @article.name,
+						   content: @article.content,
 						   status: "Ok" }
     	else
     		render json: { status: "Series was not read",
