@@ -1,3 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  post 'create', to: 'articles#create'
+  get 'read',	 to: 'articles#read'
+  put 'update',	 to: 'articles#update'
+  post 'delete', to: 'articles#delete'
+  get 'index',	 to: 'articles#index'
 end
