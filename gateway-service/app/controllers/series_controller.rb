@@ -1,16 +1,15 @@
-class ArticleController < ApplicationController
+class SeriesController < ApplicationController
 	before_action :set_service_url
 
 	def set_service_url
-		@service_url = 'http://localhost:3003/'
+		@service_url = 'http://localhost:3004/'
 	end
 
 	def create
 		RestClient.post(@service_url + 'create',
 						{ token: session[:token],
-						  series_id: params[:series_id],
 						  name: params[:name],
-						  content: params[:content] } ) do |response, request, result|
+						  avatar_id: params[:avatar_id] } ) do |response, request, result|
 			@r = response
 		end
 		render json: @r
@@ -26,10 +25,8 @@ class ArticleController < ApplicationController
 	def update
 		RestClient.put(@service_url + 'update',
 						{ token: session[:token],
-						  id: params[:id],
-						  series_id: params[:series_id],
 						  name: params[:name],
-						  content: params[:content] } ) do |response, request, result|
+						  avatar_id: params[:avatar_id] } ) do |response, request, result|
 			@r = response
 		end
 		render json: @r

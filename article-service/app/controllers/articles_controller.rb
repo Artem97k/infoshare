@@ -21,25 +21,20 @@ class ArticlesController < ApplicationController
 	end
 
 	def create
-		if @login == params[:login]
-			@article = Article.new( user_id: @user_id
-									series_id: params[:series_id],
-						  			name: params[:name],
-						 			content: params[:content] )
-			if @article.save
-				render json: { user_id: @user_id
-							   series_id: params[:series_id],
-						  	   name: params[:name],
-						  	   content: params[:content],
-							   status: "Ok" }
-			else
-				render json: { status: "New article was not created",
-							   error: "Invalid article parameters" }
-    		end
-    	else
-    		render json: { status: "New article was not created",
-						  error: "Invalid user token" }
-    	end
+		@article = Article.new( user_id: @user_id
+								series_id: params[:series_id],
+					  			name: params[:name],
+					 			content: params[:content] )
+		if @article.save
+			render json: { user_id: @user_id
+						   series_id: params[:series_id],
+					  	   name: params[:name],
+					  	   content: params[:content],
+						   status: "Ok" }
+		else
+			render json: { status: "New article was not created",
+						   error: "Invalid article parameters" }
+   		end
 	end
 
 	def read
@@ -50,7 +45,7 @@ class ArticlesController < ApplicationController
 						   status: "Ok" }
     	else
     		render json: { status: "Article was not read",
-    					   error: "Article record with given login not found" }
+    					   error: "Article record with given id not found" }
     	end
 	end
 
@@ -71,7 +66,7 @@ class ArticlesController < ApplicationController
     		end
     	else
     		render json: { status: "Article was not updated",
-    					   error: "Article record with given login not found" }
+    					   error: "Article record with given id not found" }
     	end
 	end
 
@@ -86,7 +81,7 @@ class ArticlesController < ApplicationController
     		end
     	else
     		render json: { status: "Profile was not deleted", 
-    					   error: "Profile record with given login not found" }
+    					   error: "Profile record with given id not found" }
     	end
 	end
 

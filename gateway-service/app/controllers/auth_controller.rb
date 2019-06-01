@@ -1,7 +1,7 @@
 class AuthController < ApplicationController
-	before_action :set_auth_url
+	before_action :set_service_url
 
-	def set_auth_url
+	def set_service_url
 		@service_url = 'http://localhost:3001/'
 	end
 
