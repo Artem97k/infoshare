@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   put 'update',	 to: 'profiles#update'
   post 'delete', to: 'profiles#delete'
   get 'index',	 to: 'profiles#index'
+  get 'token',	 to: 'profiles#view_token'
 end

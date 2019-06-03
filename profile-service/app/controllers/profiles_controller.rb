@@ -10,14 +10,8 @@ class ProfilesController < ApplicationController
 
 	def set_token
 		@token = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
-		rescue StandardError => @error
-		if @error
-			render json: { status: 'Could not decode token, please reauthoirize', 
-						   error: @error }
-		else
-			@login = @token['login']
-			@user_id = @token['id']
-		end
+		@login = @token['login']
+		@user_id = @token['id']
 	end
 
 	def create
@@ -38,7 +32,9 @@ class ProfilesController < ApplicationController
 						   status: "Ok" }
 		else
 			render json: { status: "New profile was not created",
-						   error: "Invalid profile parameters" }
+						   error: "Invalid profile parameters",
+						   user_id: @user_id,
+						   login: @login }
     	end
 	end
 
@@ -82,7 +78,7 @@ class ProfilesController < ApplicationController
 
 	def delete
 		if @profile = Profile.find_by(user_id: @user_id)
-			if @article.user_id == @user_id
+			if @profile.user_id == @user_id
 				@profile.destroy
 				render json: { status: "Ok" }
 			else
@@ -96,6 +92,6 @@ class ProfilesController < ApplicationController
 	end
 
 	def profile_params
-		params.require(:login).permit(:token, :login, :name, :surname, :email, :bio, :avatar_id)
+		params.permit(:token, :login, :name, :surname, :email, :bio, :avatar_id, :user_id)
 	end
 end

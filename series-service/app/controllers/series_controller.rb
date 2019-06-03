@@ -10,14 +10,8 @@ class SeriesController < ApplicationController
 
 	def set_token
 		@token = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
-		rescue StandardError => @error
-		if @error
-			render json: { status: 'Could not decode token, please reauthoirize', 
-						   error: @error }
-		else
-			@login = @token['login']
-			@user_id = @token['id']
-		end
+		@login = @token['login']
+		@user_id = @token['id']
 	end
 
 	def create

@@ -1,12 +1,8 @@
 class ProfileController < ApplicationController
-	before_action :set_service_url
-
-	def set_service_url
-		@service_url = 'http://localhost:3002/'
-	end
+	@@service_url = 'http://localhost:3002/'
 
 	def create
-		RestClient.post(@service_url + 'create',
+		RestClient.post(@@service_url + 'create',
 						{ token: session[:token],
 						  login: params[:login],
 						  name: params[:name],
@@ -20,14 +16,14 @@ class ProfileController < ApplicationController
 	end
 
 	def read
-		RestClient.get(@service_url + 'read?' + "login=#{params[:login]}" ) do |response, request, result|
+		RestClient.get(@@service_url + 'read?' + "login=#{params[:login]}" ) do |response, request, result|
 			@r = response
 		end
 		render json: @r
 	end
 
 	def update
-		RestClient.put(@service_url + 'update',
+		RestClient.put(@@service_url + 'update',
 						{ token: session[:token],
 						  login: params[:login],
 						  name: params[:name],
@@ -41,7 +37,7 @@ class ProfileController < ApplicationController
 	end
 
 	def delete
-		RestClient.post(@service_url + 'delete',
+		RestClient.post(@@service_url + 'delete',
 						{ token: session[:token],
 						  login: params[:login] } ) do |response, request, result|
 			@r = response
