@@ -22,4 +22,6 @@ Rails.application.routes.draw do
   get 'comment', 		 to: 'comment#read'
   put 'comment/update',  to: 'comment#update'
   post 'comment/delete', to: 'comment#delete'
+
+  root to: 'html_renderer#index'
 end
