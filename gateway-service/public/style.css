@@ -25,7 +25,7 @@ body {
   font-size: 17px;
 }
 
-#username, #sign_up, #sign_in {
+#username, #sign_up, #sign_in, #sign_out {
   background-color: #137af7;
   color: white;
   float: right;
@@ -34,7 +34,7 @@ body {
   border-color: #333;
 }
 
-#username:hover, #sign_up:hover, #sign_in:hover {
+#username:hover, #sign_up:hover, #sign_in:hover, #sign_out:hover {
   background-color: #63a9ff;
 }
 

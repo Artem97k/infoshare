@@ -17,9 +17,9 @@ class AuthController < ApplicationController
 			@r = JSON.parse(response).with_indifferent_access
 		end
 		if @r[:status] == 'Ok'
-			session[:token] = @r[:token]
 			render json: { status: 'Ok',
 						   token: @r[:token],
+						   login: params[:login],
 						   session: session[:token] }
 		else
 			render json: { status: @r[:status], error: @r[:error] }

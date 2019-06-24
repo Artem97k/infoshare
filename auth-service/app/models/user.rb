@@ -2,7 +2,8 @@ class User < ApplicationRecord
 	include BCrypt
 	@@key = "my_super_secure_key"
 
-	validates :login, :presence => true, :length => { :in => 5..20 }, :uniqueness => true
+	validates :login, :presence => true, :length => { :in => 3..20 }, :uniqueness => true
+	validates :password, :presence => true
 
 	def password=(password)
 		@password = Password.create(password)
@@ -12,7 +13,7 @@ class User < ApplicationRecord
 	def password
 		@password ||= Password.new(self.hashed_pwd)
 	end
-
+	
 	def issue_token
 		JWT.encode({ 'login': self.login, 'id': self.id }, @@key, 'HS256')
 	end
