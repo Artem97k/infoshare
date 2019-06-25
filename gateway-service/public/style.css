@@ -4,6 +4,32 @@ body {
   background-color: #eff3ff;
 }
 
+input {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+h2 {
+  margin-top: 25%;
+  text-align: center;
+}
+
+a, select {
+  cursor: pointer;
+}
+
+td {
+  text-align: center;
+  color: white;
+  background-color: #137af7;
+  border: solid #333 2px;
+  border-radius: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  padding: 5%;
+  cursor: pointer;
+}
+
 .topnav {
   margin: 0 auto;
   width: 75%;
@@ -14,6 +40,7 @@ body {
 #main {
   margin: 0 auto;
   width: 50%;
+  padding: 5%;
 }
 
 .topnav a {
@@ -51,34 +78,24 @@ body {
   text-align: center;
 }
 
-h2 {
-  margin-top: 30%;
-  text-align: center;
-}
-
 #topbar {
   background-color: #333;
 }
 
-#su_form, #si_form {  
+#su_form, #si_form, #search_form {
   width: 30%;
   border: solid #333 2px;
   border-radius: 10px;
   padding: 10px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 30%;
+  margin-top: 25%;
   background-color: #f9fbff;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
 }
 
-input {
-  width: 100%;
-  margin-bottom: 2px;
-}
-
-#signup_submit, #signin_submit {
+#signup_submit, #signin_submit, #search_submit {
   border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -88,10 +105,19 @@ input {
   cursor: pointer;
 }
 
-#signup_submit:hover, #signin_submit:hover {
+#signup_submit:hover, #signin_submit:hover, #search_submit:hover {
   background-color: #63a9ff;
 }
 
-a {
-  cursor: pointer;
+.content .tile {
+  text-align: center;
+  color: white;
+  background-color: #137af7;
+  border: solid #333 2px;
+  border-radius: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  padding: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
 }
