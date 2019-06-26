@@ -30,6 +30,19 @@ td {
   cursor: pointer;
 }
 
+form {
+  width: 30%;
+  border: solid #333 2px;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25%;
+  background-color: #f9fbff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
 .topnav {
   margin: 0 auto;
   width: 75%;
@@ -80,19 +93,6 @@ td {
 
 #topbar {
   background-color: #333;
-}
-
-form {
-  width: 30%;
-  border: solid #333 2px;
-  border-radius: 10px;
-  padding: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 25%;
-  background-color: #f9fbff;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
 }
 
 #signup_submit, #signin_submit, #search_submit, #profile_edit_submit {

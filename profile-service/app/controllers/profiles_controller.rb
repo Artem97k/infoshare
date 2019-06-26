@@ -23,8 +23,7 @@ class ProfilesController < ApplicationController
 	def params_for_create
 		res = Hash.new
 		params.each { |key, value| if value != nil then res[key] = value end }
-		res[:login] = @login
-		res[:user_id] = @user_id
+		res.update( { login: @login, user_id: @user_id } )
 		res.except!('token', 'controller', 'action')
 	end
 	
