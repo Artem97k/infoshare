@@ -37,6 +37,29 @@ const search_form = `
   <input type="submit" id="search_submit" value="Search">
 </form>`;
 
+const profile_page = `
+<div class="profile_page">
+  <p id="name"></p>
+  <p id="surname"></p>
+  <p id="email"></p>
+  <p id="bio"></p>
+  <a id="profile_edit"></a>
+</div>`;
+
+const pe_form = `
+<form id="pe_form">
+  Name<br>
+  <input type="text" id="name">
+  Surname<br>
+  <input type="text" id="surname">
+  Email<br>
+  <input type="text" id="email">
+  Bio<br>
+  <input type="text" id="bio"><br>
+  <p style="display: inline;"id="info_display"></p>
+  <input type="submit" id="profile_edit_submit" value="Save changes">
+</form>`;
+
 const categories = [ 
   "Category 1", 
   "Category 2", 
@@ -93,6 +116,43 @@ $(document).on( "click", "#categories", function() {
   }
   cat_page += '</table>';
   $("#main").prepend(cat_page);
+});
+
+$(document).on( "click", "#username", function() {
+  $("#main").empty();
+  $.get({ url: "profile/",
+      	       data: { login: $("#username").val() },
+      	       success: function (data) {
+      	         if ( data.status === "Ok" ) {
+      	           $("#main").prepend(profile_page);
+      	         } else {
+      	           let form = $(pe_form);
+      	           form.find("#info_display").text("Create profile to publish articles!");
+      	           form.find("#profile_edit_submit").attr("value","Create");
+                   $("#main").prepend(form);
+      	         }
+      	       },
+      	       error: function (data) {
+      	         alert("Sorry, service unavailable, come back later!");
+      	       }
+  });
+});
+
+$(document).on( "click", "#profile_edit_submit", function() {
+  $("#main").empty();
+  $.post({ url: "profile/create",
+      	       data: { token: localStorage.getItem('token') },
+      	       success: function (data) {
+      	         if ( data.status === "Ok" ) {
+      	           $("#main").prepend(profile_page);
+      	         } else {
+      	           
+      	         }
+      	       },
+      	       error: function (data) {
+      	         alert("Sorry, service unavailable, come back later!");
+      	       }
+  });
 });
 
 $(document).on( "keyup", "#password2", function() {

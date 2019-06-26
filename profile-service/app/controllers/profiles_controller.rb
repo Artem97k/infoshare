@@ -14,14 +14,22 @@ class ProfilesController < ApplicationController
 		@user_id = @token['id']
 	end
 
+	def params_for_update
+		res = Hash.new
+		params.each { |key, value| if value != nil then res[key] = value end }
+		res.except!('token', 'controller', 'action')
+	end
+
+	def params_for_create
+		res = Hash.new
+		params.each { |key, value| if value != nil then res[key] = value end }
+		res[:login] = @login
+		res[:user_id] = @user_id
+		res.except!('token', 'controller', 'action')
+	end
+	
 	def create
-		@profile = Profile.new( login: @login,
-								user_id: @user_id,
-						   		name: params[:name], 
-							   	surname: params[:surname], 
-						   		email: params[:email], 
-						   		bio: params[:bio],
-						   		avatar_id: params[:avatar_id] )
+		@profile = Profile.new(params_for_create)
 		if @profile.save
 			render json: { login: @profile.login,
 						   name: @profile.name,
@@ -32,9 +40,7 @@ class ProfilesController < ApplicationController
 						   status: "Ok" }
 		else
 			render json: { status: "New profile was not created",
-						   error: "Invalid profile parameters",
-						   user_id: @user_id,
-						   login: @login }
+						   error: "Invalid profile parameters", }
     	end
 	end
 
@@ -56,11 +62,7 @@ class ProfilesController < ApplicationController
 	def update
 		if @profile = Profile.find_by(user_id: @user_id)
 			if @profile.user_id == @user_id
-				if @profile.update( name: params[:name], 
-						   			surname: params[:surname], 
-						   			email: params[:email], 
-						   			bio: params[:bio],
-						   			avatar_id: params[:avatar_id] )
+				if @profile.update(params_for_update)
 					render json: { status: 'Ok' }
 				else
 					render json: { status: "Profile was not updated",
