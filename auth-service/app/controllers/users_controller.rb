@@ -4,16 +4,21 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		@user = User.new(login: params[:login], password: params[:password])
-		if @user.save
-			render json: { id: @user.id,
-						   login: @user.login,
-						   pwd: @user.password,
-						   created_at: @user.created_at,
-						   status: "Ok" }
-		else
+		if User.find_by_login(params[:login])
 			render json: { status: "New user was not created",
-						   error: "Invalid user parameters" }
+						   error: "Given login already taken" }
+		else
+			@user = User.new(login: params[:login], password: params[:password])
+			if @user.save
+				render json: { id: @user.id,
+							   login: @user.login,
+							   pwd: @user.password,
+							   created_at: @user.created_at,
+							   status: "Ok" }
+			else
+				render json: { status: "New user was not created",
+							   error: "Invalid user parameters" }
+    		end
     	end
 	end
 

@@ -4,11 +4,6 @@ body {
   background-color: #eff3ff;
 }
 
-input {
-  width: 100%;
-  margin-bottom: 2px;
-}
-
 h2 {
   margin-top: 25%;
   text-align: center;
@@ -34,7 +29,7 @@ form {
   width: 30%;
   border: solid #333 2px;
   border-radius: 10px;
-  padding: 10px;
+  padding: 1.5%;
   margin-left: auto;
   margin-right: auto;
   margin-top: 25%;
@@ -43,59 +38,16 @@ form {
   font-size: 16px;
 }
 
-.topnav {
-  margin: 0 auto;
-  width: 75%;
-  overflow: hidden;
-  background-color: #333;
+input {
+  width: 100%;
+  margin-bottom: 2px;
 }
 
-#main {
-  margin: 0 auto;
-  width: 50%;
-  padding: 5%;
-}
-
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-#username, #sign_up, #sign_in, #sign_out {
-  background-color: #137af7;
-  color: white;
-  float: right;
-  border-width: 1px;
-  border-style: solid;
-  border-color: #333;
-}
-
-#username:hover, #sign_up:hover, #sign_in:hover, #sign_out:hover {
+input.submit_b:hover {
   background-color: #63a9ff;
 }
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.inactive {
-  visibility: hidden;
-}
-
-.content {
-  text-align: center;
-}
-
-#topbar {
-  background-color: #333;
-}
-
-#signup_submit, #signin_submit, #search_submit, #profile_edit_submit {
+.submit_b {
   border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -105,8 +57,8 @@ form {
   cursor: pointer;
 }
 
-#signup_submit:hover, #signin_submit:hover, #search_submit:hover, #profile_edit_submit:hover {
-  background-color: #63a9ff;
+.content {
+  text-align: center;
 }
 
 .content .tile {
@@ -120,4 +72,10 @@ form {
   padding: 5%;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+#main {
+  margin: 0 auto;
+  width: 50%;
+  padding: 5%;
 }
