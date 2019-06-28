@@ -11,7 +11,7 @@ $(document).on( "keyup", "#password2", function() {
 $(document).on( "keyup", "#password", function() {
   if ( $("#su_form").length ) {
     if ( $("#password").val() === $("#password2").val() ) {
-     $("#info_display").attr("style", "color: green;");
+      $("#info_display").attr("style", "color: green;");
       $("#info_display").text("Passwords match!");
     } else {
       $("#info_display").attr("style", "color: red;");

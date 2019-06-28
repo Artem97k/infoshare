@@ -15,7 +15,7 @@ $(document).on( "click", "#search", function() {
 
 $(document).on( "click", "#categories", function() {
   $("#main").empty();
-  let cat_page = '<table style="width:100%; border-spacing:15px;">';
+  let cat_page = '<table style="width:100%; border-spacing:14px;">';
   let l = categories.length / 2;
   var j = 0;
   for (i = 0; i < l; i++) {
@@ -24,23 +24,6 @@ $(document).on( "click", "#categories", function() {
   }
   cat_page += '</table>';
   $("#main").prepend(cat_page);
-});
-
-$(document).on( "click", "#profile_edit_submit", function() {
-  $("#main").empty();
-  $.post({ url: "profile/create",
-      	       data: { token: localStorage.getItem('token') },
-      	       success: function (data) {
-      	         if ( data.status === "Ok" ) {
-      	           $("#main").prepend(profile_page);
-      	         } else {
-      	           
-      	         }
-      	       },
-      	       error: function (data) {
-      	         alert("Sorry, service unavailable, come back later!");
-      	       }
-  });
 });
 
 $(document).on( "click", "#create", function() {

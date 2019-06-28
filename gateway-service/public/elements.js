@@ -61,10 +61,10 @@ const pe_form = `
 </form>`;
 
 const categories = [ 
-  "Category 1", 
-  "Category 2", 
-  "Category 3", 
-  "Category 4", 
-  "Category 5", 
-  "Category 6",
+  "Lorem", 
+  "Ipsum", 
+  "Dolor", 
+  "Sit amet", 
+  "Amet", 
+  "Consectetur",
 ];

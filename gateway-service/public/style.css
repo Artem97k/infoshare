@@ -14,6 +14,7 @@ a, select {
 }
 
 td {
+  width: 30%;
   text-align: center;
   color: white;
   background-color: #137af7;
