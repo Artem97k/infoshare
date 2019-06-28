@@ -1,4 +1,5 @@
 $(document).on( "click", "#profile_edit_submit", function() {
+  event.preventDefault();
   $.post({ url: "profile/create",
                data: { token: localStorage.getItem('token'),
                        name: $("#name").val(),
