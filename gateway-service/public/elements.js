@@ -43,7 +43,8 @@ const profile_page = `
   <p id="surname"></p>
   <p id="email"></p>
   <p id="bio"></p>
-  <a id="profile_edit"></a>
+  <p style="display: inline;"id="info_display"></p>
+  <input type="submit" id="profile_edit" class="submit_b" value="Edit profile info">
 </div>`;
 
 const pe_form = `

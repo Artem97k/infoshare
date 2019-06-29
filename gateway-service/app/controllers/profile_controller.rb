@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
 
 	def create
 		RestClient.post(@@service_url + 'create',
-						{ token: session[:token],
+						{ token: params[:token],
 						  login: params[:login],
 						  name: params[:name],
 						  surname: params[:surname],
@@ -24,7 +24,7 @@ class ProfileController < ApplicationController
 
 	def update
 		RestClient.put(@@service_url + 'update',
-						{ token: session[:token],
+						{ token: params[:token],
 						  login: params[:login],
 						  name: params[:name],
 						  surname: params[:surname],
@@ -38,7 +38,7 @@ class ProfileController < ApplicationController
 
 	def delete
 		RestClient.post(@@service_url + 'delete',
-						{ token: session[:token],
+						{ token: params[:token],
 						  login: params[:login] } ) do |response, request, result|
 			@r = response
 		end

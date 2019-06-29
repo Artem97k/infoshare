@@ -9,7 +9,7 @@ class ProfilesController < ApplicationController
 	end
 
 	def set_token
-		@token = JWT.decode(params[:token], @@key, true, { algorithm: 'HS256' })[0]
+		@token = JWT.decode(params['token'], @@key, true, { algorithm: 'HS256' })[0]
 		@login = @token['login']
 		@user_id = @token['id']
 	end
@@ -62,7 +62,12 @@ class ProfilesController < ApplicationController
 		if @profile = Profile.find_by(user_id: @user_id)
 			if @profile.user_id == @user_id
 				if @profile.update(params_for_update)
-					render json: { status: 'Ok' }
+					render json: { name: @profile.name, 
+						    	   surname: @profile.surname, 
+						   		   email: @profile.email, 
+						   		   bio: @profile.bio,
+						   		   avatar_id: @profile.avatar_id,
+						   		   status: 'Ok' }
 				else
 					render json: { status: "Profile was not updated",
 								   error: "Invalid profile parameters" }
@@ -93,6 +98,6 @@ class ProfilesController < ApplicationController
 	end
 
 	def profile_params
-		params.permit(:token, :login, :name, :surname, :email, :bio, :avatar_id, :user_id)
+		params.permit(:login, :name, :surname, :email, :bio, :avatar_id, :token, :user_id)
 	end
 end

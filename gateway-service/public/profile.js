@@ -1,16 +1,17 @@
-$(document).on( "click", "#profile_edit_submit", function() {
+$(document).on( "click", "#profile_create_submit", function() {
   event.preventDefault();
   $.post({ url: "profile/create",
                data: { token: localStorage.getItem('token'),
                        name: $("#name").val(),
-                       surname: $("#name").val(),
-                       email: $("#name").val(),
-                       bio: $("#name").val()
+                       surname: $("#surname").val(),
+                       email: $("#email").val(),
+                       bio: $("#bio").val()
                      },
                success: function (data) {
                  if ( data.status === "Ok" ) {
                    $("#main").empty();
-                   $("#main").prepend(profile_page);
+                   let page = set_profile_page(data, profile_page);
+                   $("#main").prepend(page);
                  } else {
                    $("#info_display").attr("style", "color: red;");
                    $("#info_display").text( data.error );
@@ -22,21 +23,65 @@ $(document).on( "click", "#profile_edit_submit", function() {
   });
 });
 
-function set_profile (profile_data) {
-  $.get({ url: "profile/",
-               data: { login: $("#username").val() },
+$(document).on( "click", "#profile_edit_submit", function() {
+  event.preventDefault();
+  $.ajax({ url: "profile/update",
+          method: 'PUT',
+               data: { token: localStorage.getItem('token'),
+                       name: $("#name").val(),
+                       surname: $("#surname").val(),
+                       email: $("#email").val(),
+                       bio: $("#bio").val()
+                     },
                success: function (data) {
                  if ( data.status === "Ok" ) {
-                   $("#main").prepend(profile_page);
+                   $("#main").empty();
+                   let page = set_profile_page(data, profile_page);
+                   $("#main").prepend(page);
                  } else {
-                   let form = $(pe_form);
-                   form.find("#info_display").text("Create profile to publish articles!");
-                   form.find("#profile_edit_submit").attr("value","Create");
-                   $("#main").prepend(form);
+                   $("#info_display").attr("style", "color: red;");
+                   $("#info_display").text( data.error );
                  }
                },
                error: function (data) {
                  alert("Sorry, service unavailable, come back later!");
                }
   });
+});
+
+function set_profile_page(profile_data, page_form) {
+  let page = $(page_form);
+  page.find("#name").text(profile_data.name);
+  page.find("#surname").text(profile_data.surname);
+  page.find("#bio").text(profile_data.bio);
+  page.find("#email").text(profile_data.email);
+  return page
 }
+
+function set_profile_edit_page(profile_data, page_form) {
+  let page = $(page_form);
+  page.find("#name").val(profile_data.name);
+  page.find("#surname").val(profile_data.surname);
+  page.find("#bio").val(profile_data.bio);
+  page.find("#email").val(profile_data.email);
+  return page
+}
+
+$(document).on( "click", "#profile_edit", function() {
+  $("#main").empty();
+  $.ajax({url: 'profile',
+          data: { login: $("#username").text() },
+          success: function (data) {
+            if ( data.status === "Ok" ) {
+              let page = set_profile_edit_page(data, pe_form);
+              $("#main").prepend(page);
+            } else {
+              $("#info_display").attr("style", "color: red;");
+              $("#info_display").text( data.error );
+            }
+          },
+          error: function (data) {
+            alert("Sorry, service unavailable, come back later!");
+          }
+  });
+});

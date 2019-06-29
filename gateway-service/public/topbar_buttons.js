@@ -21,15 +21,17 @@ $(document).on( "click", "#sign_out", function() {
 
 $(document).on( "click", "#username", function() {
   $("#main").empty();
-  $.get({ url: "profile/",
-               data: { login: $("#username").val() },
+  $.get({ url: 'profile',
+               data: { login: $("#username").text() },
                success: function (data) {
                  if ( data.status === "Ok" ) {
-                   $("#main").prepend(profile_page);
+                   let page = set_profile_page(data, profile_page);
+                   $("#main").prepend(page);
                  } else {
                    let form = $(pe_form);
                    form.find("#info_display").text("Create profile to publish articles!");
-                   form.find("#profile_edit_submit").attr("value","Create");
+                   form.find("#profile_edit_submit").attr("value", "Create");
+                   form.find("#profile_edit_submit").attr("id", "profile_create_submit");
                    $("#main").prepend(form);
                  }
                },
