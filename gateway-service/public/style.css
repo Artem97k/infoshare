@@ -80,3 +80,7 @@ input.submit_b:hover {
   width: 50%;
   padding: 5%;
 }
+
+#profile_edit {
+  width: 50%;
+}

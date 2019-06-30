@@ -29,9 +29,9 @@ const search_form = `
 <form id="search_form">
   Search:
   <select>
-    <option value="a">Article</option>
-    <option value="s">Series</option>
-    <option value="p">People</option>
+    <option value="article">Article</option>
+    <option value="series">Series</option>
+    <option value="profile">People</option>
   </select><br>
   <input type="text" id="search_query">
   <input type="submit" id="search_submit" class="submit_b" value="Search">
@@ -39,9 +39,13 @@ const search_form = `
 
 const profile_page = `
 <div class="profile_page">
+  <p><b>Name:</b></p>
   <p id="name"></p>
+  <p><b>Surname:</b></p>
   <p id="surname"></p>
+  <p><b>Email:</b></p>
   <p id="email"></p>
+  <p><b>Bio:</b></p>
   <p id="bio"></p>
   <p style="display: inline;"id="info_display"></p>
   <input type="submit" id="profile_edit" class="submit_b" value="Edit profile info">
