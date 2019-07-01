@@ -76,6 +76,8 @@ class UsersController < ApplicationController
 		if @user = User.find_by(login: params[:login])
 			if @user.password == params[:password]
 				render json: { token: @user.issue_token,
+							   login: @user.login,
+							   user_id: @user.id,
 							   status: 'Ok' }
 			else
 				render json: { status: "Can't authorize client",

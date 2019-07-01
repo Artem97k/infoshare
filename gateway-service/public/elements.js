@@ -29,11 +29,12 @@ const search_form = `
 <form id="search_form">
   Search:
   <select>
-    <option value="article">Article</option>
-    <option value="series">Series</option>
     <option value="profile">People</option>
+    <option value="series">Series</option>
+    <option value="article">Article</option>
   </select><br>
   <input type="text" id="search_query">
+  <p style="display: inline;"id="info_display"></p>
   <input type="submit" id="search_submit" class="submit_b" value="Search">
 </form>`;
 
@@ -48,7 +49,6 @@ const profile_page = `
   <p><b>Bio:</b></p>
   <p id="bio"></p>
   <p style="display: inline;"id="info_display"></p>
-  <input type="submit" id="profile_edit" class="submit_b" value="Edit profile info">
 </div>`;
 
 const pe_form = `
@@ -73,3 +73,7 @@ const categories = [
   "Amet", 
   "Consectetur",
 ];
+
+const search_result_page = `
+<table id="search_display">
+</table>`;

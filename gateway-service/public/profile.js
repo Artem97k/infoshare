@@ -18,7 +18,7 @@ $(document).on( "click", "#profile_create_submit", function() {
                  }
                },
                error: function (data) {
-                 alert("Sorry, service unavailable, come back later!");
+                 alert("Server error!");
                }
   });
 });
@@ -44,7 +44,7 @@ $(document).on( "click", "#profile_edit_submit", function() {
                  }
                },
                error: function (data) {
-                 alert("Sorry, service unavailable, come back later!");
+                 alert("Server error!");
                }
   });
 });
@@ -81,7 +81,7 @@ $(document).on( "click", "#profile_edit", function() {
             }
           },
           error: function (data) {
-            alert("Sorry, service unavailable, come back later!");
+            alert("Server error!");
           }
   });
 });

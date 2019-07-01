@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   post 'delete', to: 'profiles#delete'
   get 'index',	 to: 'profiles#index'
   get 'token',	 to: 'profiles#view_token'
+  post 'find', to: 'profiles#find'
 end

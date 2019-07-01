@@ -20,7 +20,7 @@ class AuthController < ApplicationController
 			render json: { status: 'Ok',
 						   token: @r[:token],
 						   login: params[:login],
-						   session: session[:token] }
+						   user_id: @r[:user_id] }
 		else
 			render json: { status: @r[:status], error: @r[:error] }
 		end
@@ -29,12 +29,10 @@ class AuthController < ApplicationController
 	def log_out
 		if session[:token]
 			session[:token] = nil
-			render json: { status: 'Ok',
-						   session: session[:token] }
+			render json: { status: 'Ok' }
 		else
 			render json: { status: 'Could not log out',
-						   error: 'No session to terminate',
-						   session: session[:token] }
+						   error: 'No session to terminate' }
 		end
 	end
 end

@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
 	skip_before_action :verify_authenticity_token
 	@@key = "my_super_secure_key"
 
-	before_action :set_token, except: [:read, :index]
+	before_action :set_token, except: [:read, :index, :find]
 
 	def index
 		render json: Profile.all
@@ -97,7 +97,24 @@ class ProfilesController < ApplicationController
     	end
 	end
 
+	def find
+      @db = Profile.all
+      @db = @db.as_json
+      @res = Array.new
+      @db.each do |profile|
+      if ( profile['login'].include?(params[:query]) || 
+      		profile['name'].include?(params[:query]) || 
+      		profile['surname'].include?(params[:query]) ) then @res.push(profile) end
+      end
+      if @res.any? then
+      	@res.push( { status: "Ok" } )
+      else
+      	@res.push( { status: "Nothing found!" } )
+      end
+      render json: @res
+	end
+
 	def profile_params
-		params.permit(:login, :name, :surname, :email, :bio, :avatar_id, :token, :user_id)
+		params.permit(:login, :name, :surname, :email, :bio, :avatar_id, :token, :user_id, :query)
 	end
 end

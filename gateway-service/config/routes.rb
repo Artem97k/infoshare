@@ -23,5 +23,7 @@ Rails.application.routes.draw do
   put 'comment/update',  to: 'comment#update'
   post 'comment/delete', to: 'comment#delete'
 
+  post 'search',     to: 'search#find'
+
   root to: 'html_renderer#index'
 end

@@ -19,7 +19,7 @@ $(document).on( "click", "#categories", function() {
   let l = categories.length / 2;
   var j = 0;
   for (i = 0; i < l; i++) {
-    cat_page += '<tr><td>' + categories[j] + '</td>' + '<td>' + categories[j+1] + '</td></tr>';
+    cat_page += '<tr><td class="cat">' + categories[j] + '</td>' + '<td class="cat">' + categories[j+1] + '</td></tr>';
     j += 2;
   }
   cat_page += '</table>';

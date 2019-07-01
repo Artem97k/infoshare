@@ -36,7 +36,7 @@ $(document).on("click", "#signup_submit", function(){
                  }
       	       },
       	       error: function (data) {
-      	         alert("Sorry, service unavailable, come back later!");
+      	         alert("Server error!");
       	       }
        });
     } else {
@@ -67,8 +67,9 @@ $(document).on("click", "#signin_submit", function(){
                   $("#username").attr("class", "auth");
       	      	  localStorage.setItem('token', data.token);
       	      	  localStorage.setItem('login', data.login);
+                  localStorage.setItem('user_id', data.user_id);
                   $("#main").empty();
-      	          alert(localStorage.getItem('token'));
+      	          alert(localStorage.getItem('user_id').toString());
       	        } else {
                   $("#info_display").attr("style", "color: red;");
                   $("#info_display").text( data.error );
