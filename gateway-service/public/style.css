@@ -16,14 +16,17 @@ a, select {
 td.cat {
   width: 30%;
   text-align: center;
-  color: white;
-  background-color: #137af7;
+  color: black;
+  background-color: #ebebeb;
   border: solid #333 2px;
-  border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   padding: 5%;
   cursor: pointer;
+}
+
+td.cat:hover {
+  background-color: #f2f2f2;
 }
 
 form {
@@ -100,9 +103,8 @@ input.submit_b:hover {
 .profile_link {
   text-align: center;
   color: white;
-  background-color: #137af7;
+  background-color: #8fbaff;
   border: solid #333 2px;
-  border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   padding: 1%;
   margin-left: 1%;
@@ -111,5 +113,5 @@ input.submit_b:hover {
 }
 
 .profile_link:hover {
-  background-color: #63a9ff;
+  background-color: #c2daff;
 }

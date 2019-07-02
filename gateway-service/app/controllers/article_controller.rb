@@ -3,7 +3,7 @@ class ArticleController < ApplicationController
 
 	def create
 		RestClient.post(@@service_url + 'create',
-						{ token: session[:token],
+						{ token: params[:token],
 						  series_id: params[:series_id],
 						  name: params[:name],
 						  content: params[:content] } ) do |response, request, result|
@@ -21,7 +21,7 @@ class ArticleController < ApplicationController
 
 	def update
 		RestClient.put(@@service_url + 'update',
-						{ token: session[:token],
+						{ token: params[:token],
 						  id: params[:id],
 						  series_id: params[:series_id],
 						  name: params[:name],
@@ -33,7 +33,7 @@ class ArticleController < ApplicationController
 
 	def delete
 		RestClient.post(@@service_url + 'delete',
-						{ token: session[:token],
+						{ token: params[:token],
 						  id: params[:id] } ) do |response, request, result|
 			@r = response
 		end

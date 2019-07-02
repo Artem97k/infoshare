@@ -58,7 +58,7 @@ const pe_form = `
   Surname<br>
   <input type="text" id="surname">
   Email<br>
-  <input type="text" id="email">
+  <input type="email" id="email">
   Bio<br>
   <input type="text" id="bio"><br>
   <p style="display: inline;"id="info_display"></p>
@@ -77,3 +77,22 @@ const categories = [
 const search_result_page = `
 <table id="search_display">
 </table>`;
+
+const ar_create_form = `
+<form id="ar_create_form" style="width: 100%; margin-top: 10%;">
+  Article name<br>
+  <input type="text" id="name">
+  Content<br>
+  <textarea rows="20" style="width: 100%; resize: none;" id="content"></textarea>
+  <p style="display: inline;"id="info_display"></p>
+  <input type="submit" id="article_create_submit" class="submit_b" value="Create">
+</form>`;
+
+const article_page = `
+<div class="article_page">
+  <p><b>Name:</b></p>
+  <p id="name"></p>
+  <p><b>Content:</b></p>
+  <p id="content"></p>
+  <p style="display: inline;"id="info_display"></p>
+</div>`;
