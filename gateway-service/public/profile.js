@@ -88,7 +88,7 @@ function set_articles_list(articles_data, page_form) {
   list.append(row);
   articles_data.forEach(function(value, index, array) {
     row = '<tr>' +
-    `<td class="search_tile article_link" id="${value.id}"">` + value.name + '</td>' +
+    `<td class="search_tile article_link" id="${value.id}">` + value.name + '</td>' +
     '<td class="search_tile">' + value.category + '</td>' +
     '</tr>';
     list.append(row);

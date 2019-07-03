@@ -22,7 +22,7 @@ class ArticlesController < ApplicationController
 	def params_for_create
 		res = Hash.new
 		params.each { |key, value| if value != nil then res[key] = value end }
-		res.update( { user_id: @user_id } )
+		res.update( { user_id: @user_id, login: @login } )
 		res.except!('token', 'controller', 'action')
 	end
 
@@ -30,6 +30,7 @@ class ArticlesController < ApplicationController
 		@article = Article.new(params_for_create)
 		if @article.save
 			render json: { user_id: @user_id,
+						   login: @login,
 						   series_id: params[:series_id],
 					  	   name: params[:name],
 					  	   content: params[:content],
@@ -43,7 +44,8 @@ class ArticlesController < ApplicationController
 
 	def read
 		if @article = Article.find_by(id: params[:id])
-			render json: { series_id: @article.series_id,
+			render json: { login: @article.login,
+				           series_id: @article.series_id,
 						   name: @article.name,
 						   content: @article.content,
 						   category: @article.category,
