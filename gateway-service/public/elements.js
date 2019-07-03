@@ -69,7 +69,7 @@ const categories = [
   "Lorem", 
   "Ipsum", 
   "Dolor", 
-  "Sit amet", 
+  "Sit", 
   "Amet", 
   "Consectetur",
 ];
@@ -82,6 +82,15 @@ const ar_create_form = `
 <form id="ar_create_form" style="width: 100%; margin-top: 10%;">
   Article name<br>
   <input type="text" id="name">
+  Category<br>
+  <select>
+    <option value="lorem">Lorem</option>
+    <option value="ipsum">Ipsum</option>
+    <option value="dolor">Dolor</option>
+    <option value="sit">Sit</option>
+    <option value="amet">Amet</option>
+    <option value="Consectetur">Consectetur</option>
+  </select><br>
   Content<br>
   <textarea rows="20" style="width: 100%; resize: none;" id="content"></textarea>
   <p style="display: inline;"id="info_display"></p>
@@ -92,7 +101,13 @@ const article_page = `
 <div class="article_page">
   <p><b>Name:</b></p>
   <p id="name"></p>
+  <p><b>Category:</b></p>
+  <p id="category"></p>
   <p><b>Content:</b></p>
   <p id="content"></p>
   <p style="display: inline;"id="info_display"></p>
 </div>`;
+
+const articles_list = `
+<table id="article_list">
+</table>`;

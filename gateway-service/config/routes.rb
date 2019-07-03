@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'article', 		 to: 'article#read'
   put 'article/update',  to: 'article#update'
   post 'article/delete', to: 'article#delete'
+  post 'article/author', to: 'article#read_by_author'
 
   post 'series/create', to: 'series#create'
   get 'series', 		 to: 'series#read'

@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
 	@@key = "my_super_secure_key"
 
-	before_action :set_token, except: [:read, :index, :find]
+	before_action :set_token, except: [:read, :index, :find, :read_by_author]
 
 	def index
 		render json: Article.all
@@ -33,6 +33,7 @@ class ArticlesController < ApplicationController
 						   series_id: params[:series_id],
 					  	   name: params[:name],
 					  	   content: params[:content],
+					  	   category: params[:category],
 						   status: "Ok" }
 		else
 			render json: { status: "New article was not created",
@@ -42,9 +43,10 @@ class ArticlesController < ApplicationController
 
 	def read
 		if @article = Article.find_by(id: params[:id])
-			render json: { series_id: params[:series_id],
-						   name: params[:name],
-						   content: params[:content],
+			render json: { series_id: @article.series_id,
+						   name: @article.name,
+						   content: @article.content,
+						   category: @article.category,
 						   status: "Ok" }
     	else
     		render json: { status: "Article was not read",
@@ -86,11 +88,26 @@ class ArticlesController < ApplicationController
     	end
 	end
 
+	def read_by_author
+		if @articles = Article.where(user_id: params[:user_id])
+			@articles = @articles.as_json
+			@res = Array.new
+			@articles.each do |article|
+				@res.push(article)
+			end
+			@res.push( { status: "Ok" } )
+			render json: @res
+    	else
+    		render json: { status: "Article was not read",
+    					   error: "Article record with given author id not found" }
+    	end
+	end
+
 	def find
       @db = Article.all
       @db = @db.as_json
       @res = Array.new
-      @db.each do |profile|
+      @db.each do |article|
       if ( article['content'].include?(params[:query]) || 
       		article['name'].include?(params[:query]) ) then @res.push(article) end
       end
@@ -103,6 +120,6 @@ class ArticlesController < ApplicationController
 	end
 
 	def profile_params
-		params.permit(:token, :id, :series_id, :name, :content, :query )
+		params.permit(:token, :id, :series_id, :name, :content, :query, :category, :user_id )
 	end
 end

@@ -52,9 +52,6 @@ $(document).on( "click", ".profile_link", function() {
                         $("#search_display").remove();
                         $("#search_form").remove();
                         let page = set_profile_page(data, profile_page);
-                        if ( localStorage.getItem('login') === data.login) {
-                          page.append('<input type="submit" id="profile_edit" class="submit_b" value="Edit profile info">');
-                        }
                         $("#main").prepend(page);
                       } else {
                         $("#info_display").attr("style", "color: red;");

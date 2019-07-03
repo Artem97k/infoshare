@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_29_170033) do
+ActiveRecord::Schema.define(version: 2019_07_03_103136) do
 
   create_table "articles", force: :cascade do |t|
     t.integer "user_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2019_05_29_170033) do
     t.string "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
   end
 
 end

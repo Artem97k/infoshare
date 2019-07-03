@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   put 'update',	 to: 'articles#update'
   post 'delete', to: 'articles#delete'
   get 'index',	 to: 'articles#index'
+  post 'read_by_author', to: 'articles#read_by_author'
 end

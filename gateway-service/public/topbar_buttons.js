@@ -26,9 +26,6 @@ $(document).on( "click", "#username", function() {
                success: function (data) {
                  if ( data.status === "Ok" ) {
                    let page = set_profile_page(data, profile_page);
-                   if ( localStorage.getItem('login') === data.login ) {
-                     page.append('<input type="submit" id="profile_edit" class="submit_b" value="Edit profile info">');
-                   }
                    $("#main").prepend(page);
                  } else {
                    let form = $(pe_form);

@@ -6,7 +6,8 @@ class ArticleController < ApplicationController
 						{ token: params[:token],
 						  series_id: params[:series_id],
 						  name: params[:name],
-						  content: params[:content] } ) do |response, request, result|
+						  content: params[:content],
+						  category: params[:category] } ) do |response, request, result|
 			@r = response
 		end
 		render json: @r
@@ -19,13 +20,21 @@ class ArticleController < ApplicationController
 		render json: @r
 	end
 
+	def read_by_author
+		RestClient.post(@@service_url + 'read_by_author', { user_id: params[:user_id] } ) do |response, request, result|
+			@r = response
+		end
+		render json: @r
+	end
+
 	def update
 		RestClient.put(@@service_url + 'update',
 						{ token: params[:token],
 						  id: params[:id],
 						  series_id: params[:series_id],
 						  name: params[:name],
-						  content: params[:content] } ) do |response, request, result|
+						  content: params[:content],
+						  category: params[:category] } ) do |response, request, result|
 			@r = response
 		end
 		render json: @r

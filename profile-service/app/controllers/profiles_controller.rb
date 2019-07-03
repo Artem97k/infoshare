@@ -30,7 +30,8 @@ class ProfilesController < ApplicationController
 	def create
 		@profile = Profile.new(params_for_create)
 		if @profile.save
-			render json: { login: @profile.login,
+			render json: { user_id: @user_id,
+				           login: @profile.login,
 						   name: @profile.name,
 						   surname: @profile.surname, 
 						   email: @profile.email, 
@@ -45,7 +46,8 @@ class ProfilesController < ApplicationController
 
 	def read
 		if @profile = Profile.find_by(login: params[:login])
-			render json: { login: @profile.login, 
+			render json: { user_id: @profile.user_id,
+				           login: @profile.login, 
 						   name: @profile.name, 
 						   surname: @profile.surname, 
 						   email: @profile.email, 

@@ -10,6 +10,7 @@ $(document).on( "click", "#article_create_submit", function() {
                        name: $("#name").val(),
                        content: $("#content").val(),
                        series_id: $("#series_id").val(),
+                       category: $("select").val()
                      },
                success: function (data) {
                  if ( data.status === "Ok" ) {
@@ -31,5 +32,6 @@ function set_article_page(article_data, page_form) {
   let page = $(page_form);
   page.find("#name").text(article_data.name);
   page.find("#content").text(article_data.content);
+  page.find("#category").text(article_data.category);
   return page
 }
