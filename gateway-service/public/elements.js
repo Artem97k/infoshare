@@ -109,5 +109,5 @@ const article_page = `
 </div>`;
 
 const articles_list = `
-<table id="article_list">
+<table id="article_list" style="border:solid black 2px; width: 50%;">
 </table>`;

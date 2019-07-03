@@ -6,7 +6,7 @@ $(document).on( "click", "#profile_create_submit", function() {
                     surname: $("#surname").val(),
                     email: $("#email").val(),
                     bio: $("#bio").val()
-                 },
+           },
            success: function (data) {
              if ( data.status === "Ok" ) {
                $("#main").empty();
@@ -26,26 +26,26 @@ $(document).on( "click", "#profile_create_submit", function() {
 $(document).on( "click", "#profile_edit_submit", function() {
   event.preventDefault();
   $.ajax({ url: "profile/update",
-          method: 'PUT',
-               data: { token: localStorage.getItem('token'),
-                       name: $("#name").val(),
-                       surname: $("#surname").val(),
-                       email: $("#email").val(),
-                       bio: $("#bio").val()
-                     },
-               success: function (data) {
-                 if ( data.status === "Ok" ) {
-                   $("#main").empty();
-                   let page = set_profile_page(data, profile_page);
-                   $("#main").prepend(page);
-                 } else {
-                   $("#info_display").attr("style", "color: red;");
-                   $("#info_display").text( data.error );
-                 }
-               },
-               error: function (data) {
-                 alert("Server error!");
-               }
+           method: 'PUT',
+           data: { token: localStorage.getItem('token'),
+                   name: $("#name").val(),
+                   surname: $("#surname").val(),
+                   email: $("#email").val(),
+                   bio: $("#bio").val()
+           },
+           success: function (data) {
+             if ( data.status === "Ok" ) {
+               $("#main").empty();
+               let page = set_profile_page(data, profile_page);
+               $("#main").prepend(page);
+             } else {
+               $("#info_display").attr("style", "color: red;");
+               $("#info_display").text( data.error );
+             }
+           },
+           error: function (data) {
+             alert("Server error!");
+           }
   });
 });
 
@@ -125,20 +125,20 @@ $(document).on( "click", "#profile_edit", function() {
 });
 
 $(document).on( "click", ".article_link", function() {
-  $.get({ url: "article",
+  $.get({  url: "article",
            data: { id: $(this).attr("id") },
            success: function (data) {
-                      if ( data.status === "Ok" ) {
-                        $("#main").empty();
-                        let page = set_article_page(data, article_page);
-                        $("#main").prepend(page);
-                      } else {
-                        $("#info_display").attr("style", "color: red;");
-                        $("#info_display").text( data.error );
-                      }
-                    },
+             if ( data.status === "Ok" ) {
+               $("#main").empty();
+               let page = set_article_page(data, article_page);
+               $("#main").prepend(page);
+             } else {
+               $("#info_display").attr("style", "color: red;");
+               $("#info_display").text( data.error );
+             }
+           },
            error: function (data) {
-                    alert("Server error!");
-                  }
+             alert("Server error!");
+           }
   });
 });
