@@ -36,5 +36,29 @@ function set_article_page(article_data, page_form) {
   page.find("#name").text(article_data.name);
   page.find("#content").text(article_data.content);
   page.find("#category").text(article_data.category);
+  if ( localStorage.getItem('login') === article_data.login ) {
+    page.append(`<input type="submit" id="${article_data.id}" class="submit_b article_delete" value="Delete article" style="width: 50%;">`);
+  }
   return page
 }
+
+$(document).on( "click", ".article_delete", function() {
+  $.ajax({ url: "article/delete",
+           method: "POST",
+           data: { token: localStorage.getItem('token'),
+                   id: $(this).attr("id") 
+           },
+           success: function (data) {
+             if ( data.status === "Ok" ) {
+               $("#main").empty();
+               $("#main").append('<p style="color: green;">Deleted successfully!</p>');
+             } else {
+               $("#info_display").attr("style", "color: red;");
+               $("#info_display").text( data.error );
+             }
+           },
+           error: function (data) {
+             alert("Server error!");
+           }
+  });
+});

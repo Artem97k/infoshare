@@ -56,7 +56,7 @@ function set_profile_page(profile_data, page_form) {
   page.find("#bio").text(profile_data.bio);
   page.find("#email").text(profile_data.email);
   if ( localStorage.getItem('login') === profile_data.login ) {
-    page.append('<input type="submit" id="profile_edit" class="submit_b" value="Edit profile info">');
+    page.find(".profile_form").append('<input type="submit" id="profile_edit" class="submit_b" value="Edit profile info" style="width: 100%;">');
   }
   page.append('<p><b>Articles:</b></p>');
   $.post({ url: "article/author",

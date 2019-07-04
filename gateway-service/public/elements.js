@@ -40,6 +40,7 @@ const search_form = `
 
 const profile_page = `
 <div class="profile_page">
+<form class="profile_form">
   <p><b>Name:</b></p>
   <p id="name"></p>
   <p><b>Surname:</b></p>
@@ -49,6 +50,7 @@ const profile_page = `
   <p><b>Bio:</b></p>
   <p id="bio"></p>
   <p style="display: inline;"id="info_display"></p>
+</form>
 </div>`;
 
 const pe_form = `
@@ -104,7 +106,7 @@ const article_page = `
   <p><b>Category:</b></p>
   <p id="category"></p>
   <p><b>Content:</b></p>
-  <pre id="content"></pre>
+  <pre id="content" style="width: 50%;"></pre>
   <p style="display: inline;"id="info_display"></p>
 </div>`;
 

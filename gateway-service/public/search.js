@@ -53,6 +53,7 @@ function set_search_result_page(search_data, page_form, type) {
       });
       break;
     case 'series':
+      break;
   }
   return page
 }

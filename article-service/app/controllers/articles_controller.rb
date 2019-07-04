@@ -45,7 +45,8 @@ class ArticlesController < ApplicationController
 
 	def read
 		if @article = Article.find_by(id: params[:id])
-			render json: { login: @article.login,
+			render json: { id: @article.id,
+				           login: @article.login,
 				           series_id: @article.series_id,
 						   name: @article.name,
 						   content: @article.content,
@@ -86,8 +87,8 @@ class ArticlesController < ApplicationController
 							   error: "Provided token doesn't belong to article's owner" }
     		end
     	else
-    		render json: { status: "Profile was not deleted", 
-    					   error: "Profile record with given id not found" }
+    		render json: { status: "Article was not deleted", 
+    					   error: "Article record with given id not found" }
     	end
 	end
 

@@ -114,6 +114,12 @@ input.submit_b:hover {
   background-color: #f2f2f2;
 }
 
+.profile_form {
+  margin-top: 1%;
+  margin-left: 1%;
+  margin-bottom: 1%;
+}
+
 #main {
   margin: 0 auto;
   width: 50%;
