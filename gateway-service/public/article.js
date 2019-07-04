@@ -17,6 +17,9 @@ $(document).on( "click", "#article_create_submit", function() {
                $("#main").empty();
                let page = set_article_page(data, article_page);
                $("#main").prepend(page);
+               //let cont = $("#content").html();
+               //cont = cont.replace(/(?:\r\n|\r|\n)/g, '<br>');
+               //$("#content").text(cont);
              } else {
                $("#info_display").attr("style", "color: red;");
                $("#info_display").text( data.error );

@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   post 'delete', to: 'articles#delete'
   get 'index',	 to: 'articles#index'
   post 'read_by_author', to: 'articles#read_by_author'
+  post 'read_by_category', to: 'articles#read_by_category'
   post 'find', to: 'articles#find'
 end

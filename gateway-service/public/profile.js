@@ -62,17 +62,21 @@ function set_profile_page(profile_data, page_form) {
   $.post({ url: "article/author",
                data: { user_id: profile_data.user_id },
                success: function (data) {
-                 if ( data[data.length-1].status == "Ok" ) {
-                   data.splice(-1,1);
-                   if ( data.length !== 0 ) {
-                     let list = set_articles_list(data, articles_list);
-                     page.append(list); 
+                 if ( data.status !== "Ok" && data[data.length-1] === undefined ) {
+                   $(".profile_page").append("<p>No published articles yet!</p>");
+                 } else {
+                   if ( data[data.length-1].status === "Ok" ) {
+                     data.splice(-1,1);
+                     if ( data.length !== 0 ) {
+                       let list = set_articles_list(data, articles_list);
+                       page.append(list); 
+                     } else {
+                       $(".profile_page").append("<p>No published articles yet!</p>");
+                     }
                    } else {
-                    $(".profile_page").append("<p>No published articles yet!</p>");
+                     $("#info_display").attr("style", "color: red;");
+                     $("#info_display").text( data.error );
                    }
-                  } else {
-                   $("#info_display").attr("style", "color: red;");
-                   $("#info_display").text( data.error );
                  }
                },
                error: function (data) {

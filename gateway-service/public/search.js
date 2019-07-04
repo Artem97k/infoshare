@@ -8,7 +8,7 @@ $(document).on( "click", "#search_submit", function() {
                       if ( data[data.length-1].status === "Ok" ) {
                         $("#search_display").remove();
                         $("#info_display").text("");
-                        let page = set_profile_search_result_page(data, search_result_page, $("select").val());
+                        let page = set_search_result_page(data, search_result_page, $("select").val());
                         $("#main").append(page);
                       } else { 
                         $("#search_display").remove();
@@ -23,7 +23,7 @@ $(document).on( "click", "#search_submit", function() {
   }
 });
 
-function set_profile_search_result_page(search_data, page_form, type) {
+function set_search_result_page(search_data, page_form, type) {
   search_data.splice(-1,1);
   let page = $(page_form);
   let row = '';
@@ -62,8 +62,7 @@ $(document).on( "click", ".profile_link", function() {
            data: { login: $(this).html() },
            success: function (data) {
                       if ( data.status === "Ok" ) {
-                        $("#search_display").remove();
-                        $("#search_form").remove();
+                        $("#main").empty();
                         let page = set_profile_page(data, profile_page);
                         $("#main").prepend(page);
                       } else {

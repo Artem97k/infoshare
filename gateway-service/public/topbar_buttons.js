@@ -52,14 +52,32 @@ $(document).on( "click", "#categories", function() {
   let l = categories.length / 2;
   var j = 0;
   for (i = 0; i < l; i++) {
-    cat_page += '<tr><td class="cat">' + categories[j] + '</td>' + '<td class="cat">' + categories[j+1] + '</td></tr>';
+    cat_page += `<tr><td class="cat" id=${categories[j]}>` + categories[j] + '</td>' + `<td class="cat" id=${categories[j+1]}>` + categories[j+1] + '</td></tr>';
     j += 2;
   }
+  cat_page += '<tr><td id="info_display"></td></tr>'
   cat_page += '</table>';
   $("#main").prepend(cat_page);
 });
 
 $(document).on( "click", "#create", function() {
-  $("#main").empty();
-  $("#main").prepend(cr_page);
+  $.get({ url: 'profile',
+               data: { login: $("#username").text() },
+               success: function (data) {
+                 if ( data.status === "Ok" ) {
+                   $("#main").empty();
+                   $("#main").prepend(cr_page);
+                 } else {
+                   $("#main").empty();
+                   let form = $(pe_form);
+                   form.find("#info_display").text("Create profile to publish articles!");
+                   form.find("#profile_edit_submit").attr("value", "Create");
+                   form.find("#profile_edit_submit").attr("id", "profile_create_submit");
+                   $("#main").prepend(form);
+                 }
+               },
+               error: function (data) {
+                 alert("Server error!");
+               }
+  });
 });

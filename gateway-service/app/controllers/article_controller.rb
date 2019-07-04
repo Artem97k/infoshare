@@ -27,6 +27,13 @@ class ArticleController < ApplicationController
 		render json: @r
 	end
 
+	def read_by_category
+		RestClient.post(@@service_url + 'read_by_category', { category: params[:category] } ) do |response, request, result|
+			@r = response
+		end
+		render json: @r
+	end
+
 	def update
 		RestClient.put(@@service_url + 'update',
 						{ token: params[:token],

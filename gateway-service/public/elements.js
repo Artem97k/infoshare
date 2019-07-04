@@ -84,11 +84,11 @@ const ar_create_form = `
   <input type="text" id="name">
   Category<br>
   <select>
-    <option value="lorem">Lorem</option>
-    <option value="ipsum">Ipsum</option>
-    <option value="dolor">Dolor</option>
-    <option value="sit">Sit</option>
-    <option value="amet">Amet</option>
+    <option value="Lorem">Lorem</option>
+    <option value="Ipsum">Ipsum</option>
+    <option value="Dolor">Dolor</option>
+    <option value="Sit">Sit</option>
+    <option value="Amet">Amet</option>
     <option value="Consectetur">Consectetur</option>
   </select><br>
   Content<br>
@@ -104,10 +104,14 @@ const article_page = `
   <p><b>Category:</b></p>
   <p id="category"></p>
   <p><b>Content:</b></p>
-  <p id="content"></p>
+  <pre id="content"></pre>
   <p style="display: inline;"id="info_display"></p>
 </div>`;
 
 const articles_list = `
-<table id="article_list" style="border:solid black 2px; width: 50%;">
+<table id="article_list">
+</table>`;
+
+const category_page = `
+<table id="category_page">
 </table>`;

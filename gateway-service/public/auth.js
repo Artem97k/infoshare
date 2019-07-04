@@ -75,7 +75,7 @@ $(document).on("click", "#signin_submit", function(){
                 }
       	      },
       	      error: function (data) {
-      	        alert("Sorry, service unavailable, come back later!");
+      	        alert("Server error!");
       	      }
        });
     } else {

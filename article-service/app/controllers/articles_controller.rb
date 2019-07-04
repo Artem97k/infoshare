@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
 	@@key = "my_super_secure_key"
 
-	before_action :set_token, except: [:read, :index, :find, :read_by_author]
+	before_action :set_token, except: [:read, :index, :find, :read_by_author, :read_by_category]
 
 	def index
 		render json: Article.all
@@ -22,6 +22,7 @@ class ArticlesController < ApplicationController
 	def params_for_create
 		res = Hash.new
 		params.each { |key, value| if value != nil then res[key] = value end }
+		##res['content'].gsub!(/(?:\n\r?|\r\n?)/, '<br>');
 		res.update( { user_id: @user_id, login: @login } )
 		res.except!('token', 'controller', 'action')
 	end
@@ -91,7 +92,8 @@ class ArticlesController < ApplicationController
 	end
 
 	def read_by_author
-		if @articles = Article.where(user_id: params[:user_id])
+		@articles = Article.where(user_id: params[:user_id])
+		if @articles.any?
 			@articles = @articles.as_json
 			@res = Array.new
 			@articles.each do |article|
@@ -102,6 +104,22 @@ class ArticlesController < ApplicationController
     	else
     		render json: { status: "Article was not read",
     					   error: "Article record with given author id not found" }
+    	end
+	end
+
+	def read_by_category
+		@articles = Article.where(category: params[:category])
+		if @articles.any?
+			@articles = @articles.as_json
+			@res = Array.new
+			@articles.each do |article|
+				@res.push(article)
+			end
+			@res.push( { status: "Ok" } )
+			render json: @res
+    	else
+    		render json: { status: "Article was not read",
+    					   error: "Article record with given category not found" }
     	end
 	end
 
