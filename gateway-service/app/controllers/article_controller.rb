@@ -1,5 +1,5 @@
 class ArticleController < ApplicationController
-	@@service_url = 'http://localhost:3003/'
+	@@service_url = @@article_url
 
 	def create
 		RestClient.post(@@service_url + 'create',
@@ -29,6 +29,13 @@ class ArticleController < ApplicationController
 
 	def read_by_category
 		RestClient.post(@@service_url + 'read_by_category', { category: params[:category] } ) do |response, request, result|
+			@r = response
+		end
+		render json: @r
+	end
+
+	def read_by_series
+		RestClient.post(@@service_url + 'read_by_series', { series_id: params[:series_id] } ) do |response, request, result|
 			@r = response
 		end
 		render json: @r

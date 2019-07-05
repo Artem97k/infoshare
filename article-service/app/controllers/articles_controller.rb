@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
 	@@key = "my_super_secure_key"
 
-	before_action :set_token, except: [:read, :index, :find, :read_by_author, :read_by_category]
+	before_action :set_token, except: [:read, :index, :find, :read_by_author, :read_by_category, :read_by_series]
 
 	def index
 		render json: Article.all
@@ -31,11 +31,11 @@ class ArticlesController < ApplicationController
 		@article = Article.new(params_for_create)
 		if @article.save
 			render json: { user_id: @user_id,
-						   login: @login,
-						   series_id: params[:series_id],
-					  	   name: params[:name],
-					  	   content: params[:content],
-					  	   category: params[:category],
+						   login: @article.login,
+						   series_id: @article.series_id,
+					  	   name: @article.name,
+					  	   content: @article.content,
+					  	   category: @article.category,
 						   status: "Ok" }
 		else
 			render json: { status: "New article was not created",
@@ -92,6 +92,16 @@ class ArticlesController < ApplicationController
     	end
 	end
 
+	def delete_by_series
+		@articles = Article.where(series_id: params[:series_id], user_id: @user_id)
+		if @articles.any?
+			@articles.destroy_all
+			render json: { status: "Ok" }
+    	else
+    		render json: { status: "Ok" }
+    	end
+	end
+
 	def read_by_author
 		@articles = Article.where(user_id: params[:user_id])
 		if @articles.any?
@@ -121,6 +131,22 @@ class ArticlesController < ApplicationController
     	else
     		render json: { status: "Article was not read",
     					   error: "Article record with given category not found" }
+    	end
+	end
+
+	def read_by_series
+		@articles = Article.where(series_id: params[:series_id])
+		if @articles.any?
+			@articles = @articles.as_json
+			@res = Array.new
+			@articles.each do |article|
+				@res.push(article)
+			end
+			@res.push( { status: "Ok" } )
+			render json: @res
+    	else
+    		render json: { status: "Article was not read",
+    					   error: "Article record with given series id not found" }
     	end
 	end
 

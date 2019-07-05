@@ -1,5 +1,5 @@
 class ProfileController < ApplicationController
-	@@service_url = 'http://localhost:3002/'
+	@@service_url = @@profile_url
 
 	def create
 		RestClient.post(@@service_url + 'create',

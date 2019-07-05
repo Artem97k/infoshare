@@ -1,5 +1,5 @@
 class AuthController < ApplicationController
-	@@service_url = 'http://localhost:3001/'
+	@@service_url = @@auth_url
 
 	def sign_up
 		RestClient.post( @@service_url + 'create', 

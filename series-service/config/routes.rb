@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   put 'update',	 to: 'series#update'
   post 'delete', to: 'series#delete'
   get 'index',	 to: 'series#index'
+  post 'read_by_author', to:'series#read_by_author'
+  post 'find', to: 'series#find'
 end

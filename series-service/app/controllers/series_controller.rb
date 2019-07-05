@@ -1,8 +1,8 @@
 class SeriesController < ApplicationController
-	skip_before_action :verify_authenticity_token
 	@@key = "my_super_secure_key"
+	@@gate_url = 'http://localhost:3000/'
 
-	before_action :set_token, except: [:read, :index]
+	before_action :set_token, except: [:read, :index, :read_by_author, :find]
 
 	def index
 		render json: Series.all
@@ -31,7 +31,9 @@ class SeriesController < ApplicationController
 	def create
 		@series = Series.new(params_for_create)
 		if @series.save
-			render json: { user_id: @user_id,
+			render json: { id: @series.id,
+				           user_id: @user_id,
+						   login: @login,
 					  	   name: params[:name],
 					 	   avatar_id: params[:avatar_id],
 						   status: "Ok" }
@@ -43,9 +45,11 @@ class SeriesController < ApplicationController
 
 	def read
 		if @series = Series.find_by(id: params[:id])
-			render json: { series_id: @article.series_id,
-						   name: @article.name,
-						   content: @article.content,
+			render json: { user_id: @series.user_id,
+						   login: @series.login,
+						   id: @series.id,
+						   name: @series.name,
+						   avatar_id: @series.avatar_id,
 						   status: "Ok" }
     	else
     		render json: { status: "Series was not read",
@@ -53,11 +57,31 @@ class SeriesController < ApplicationController
     	end
 	end
 
+	def read_by_author
+		@series = Series.where(user_id: params[:user_id])
+		if @series.any?
+			@series = @series.as_json
+			@res = Array.new
+			@series.each do |series|
+				@res.push(series)
+			end
+			@res.push( { status: "Ok" } )
+			render json: @res
+    	else
+    		render json: { status: "Series was not read",
+    					   error: "Series record with given author id not found" }
+    	end
+	end
+
 	def update
 		if @series = Series.find_by(id: params[:id])
 			if @series.user_id == @user_id
 				if @series.update(params_for_update)
-					render json: { status: 'Ok' }
+					render json: { series_id: @series.id,
+						           login: @series.login,
+						   		   name: @series.name,
+								   avatar_id: @series.avatar_id,
+								   status: 'Ok' }
 				else
 					render json: { status: "Series was not updated",
 								   error: "Invalid series parameters" }
@@ -75,6 +99,7 @@ class SeriesController < ApplicationController
 	def delete
 		if @series = Series.find_by(id: params[:id])
 			if @series.user_id == @user_id
+
 				@series.destroy
 				render json: { status: "Ok" }
 			else
@@ -87,7 +112,22 @@ class SeriesController < ApplicationController
     	end
 	end
 
+	def find
+      @db = Series.all
+      @db = @db.as_json
+      @res = Array.new
+      @db.each do |series|
+        if ( series['name'].include?(params[:query]) ) then @res.push(series) end
+      end
+      if @res.any? then
+      	@res.push( { status: "Ok" } )
+      else
+      	@res.push( { status: "Nothing found!" } )
+      end
+      render json: @res
+	end
+
 	def profile_params
-		params.permit(:token, :id, :name, :avatar_id, :login)
+		params.permit(:token, :id, :name, :avatar_id, :login, :query)
 	end
 end

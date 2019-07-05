@@ -58,10 +58,36 @@ function set_profile_page(profile_data, page_form) {
   if ( localStorage.getItem('login') === profile_data.login ) {
     page.find(".profile_form").append('<input type="submit" id="profile_edit" class="submit_b" value="Edit profile info" style="width: 100%;">');
   }
-  page.append('<p><b>Articles:</b></p>');
+  page.append('<table style="width: 100%"><tr><td id="articles"></td><td id="series"></td></tr></table>');
+  $.post({ url: "series/author",
+               data: { user_id: profile_data.user_id },
+               success: function (data) {
+                 $("#series").append('<p><b>Series:</b></p>');
+                 if ( data.status !== "Ok" && data[data.length-1] === undefined ) {
+                   $(".profile_page").append("<p>No published series yet!</p>");
+                 } else {
+                   if ( data[data.length-1].status === "Ok" ) {
+                     data.splice(-1,1);
+                     if ( data.length !== 0 ) {
+                       let list = set_series_list(data, series_list);
+                       $("#series").append(list); 
+                     } else {
+                       $(".profile_page").append("<p>No published series yet!</p>");
+                     }
+                   } else {
+                     $("#info_display").attr("style", "color: red;");
+                     $("#info_display").text( data.error );
+                   }
+                 }
+               },
+               error: function (data) {
+                 alert("Server error!");
+               }
+  });
   $.post({ url: "article/author",
                data: { user_id: profile_data.user_id },
                success: function (data) {
+                 $("#articles").append('<p><b>Articles:</b></p>');
                  if ( data.status !== "Ok" && data[data.length-1] === undefined ) {
                    $(".profile_page").append("<p>No published articles yet!</p>");
                  } else {
@@ -69,7 +95,7 @@ function set_profile_page(profile_data, page_form) {
                      data.splice(-1,1);
                      if ( data.length !== 0 ) {
                        let list = set_articles_list(data, articles_list);
-                       page.append(list); 
+                       $("#articles").append(list); 
                      } else {
                        $(".profile_page").append("<p>No published articles yet!</p>");
                      }
@@ -95,6 +121,17 @@ function set_articles_list(articles_data, page_form) {
     `<td class="search_tile article_link" id="${value.id}">` + value.name + '</td>' +
     '<td class="search_tile">' + value.category + '</td>' +
     '</tr>';
+    list.append(row);
+  });
+  return list
+}
+
+function set_series_list(series_data, page_form) {
+  let list = $(page_form);
+  let row = '<tr><th>Name</th></tr>';
+  list.append(row);
+  series_data.forEach(function(value, index, array) {
+    row = '<tr>' + `<td class="search_tile series_link" id="${value.id}">` + value.name + '</td>' + '</tr>';
     list.append(row);
   });
   return list

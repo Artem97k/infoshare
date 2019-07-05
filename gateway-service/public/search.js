@@ -20,6 +20,9 @@ $(document).on( "click", "#search_submit", function() {
                       alert("Server error!");
                     }
         });
+  } else {
+    $("#info_display").attr("style", "color: red;");
+    $("#info_display").text("Enter search query!");
   }
 });
 
@@ -53,6 +56,12 @@ function set_search_result_page(search_data, page_form, type) {
       });
       break;
     case 'series':
+      row = '<tr><th>Name</th></tr>';
+      page.append(row);
+      search_data.forEach(function(value, index, array) {
+        row = '<tr>' + `<td class="search_tile series_link" id="${value.id}">` + value.name + '</td>' + '</tr>';
+        page.append(row);
+      });
       break;
   }
   return page

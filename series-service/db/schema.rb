@@ -10,16 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_134633) do
+ActiveRecord::Schema.define(version: 2019_07_05_130022) do
 
-  create_table "articles", force: :cascade do |t|
+  create_table "series", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "series_id", default: 0
     t.string "name"
-    t.string "content"
+    t.integer "avatar_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "category"
     t.string "login"
   end
 

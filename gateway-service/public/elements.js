@@ -93,10 +93,19 @@ const ar_create_form = `
     <option value="Amet">Amet</option>
     <option value="Consectetur">Consectetur</option>
   </select><br>
+  <input type="text" id="series_id" style="display: none;" value="0">
   Content<br>
   <textarea rows="20" style="width: 100%; resize: none;" id="content"></textarea>
   <p style="display: inline;"id="info_display"></p>
   <input type="submit" id="article_create_submit" class="submit_b" value="Create">
+</form>`;
+
+const sr_create_form = `
+<form id="sr_create_form" style="width: 50%; margin-top: 10%;">
+  Name<br>
+  <input type="text" id="name"><br>
+  <p style="display: inline;"id="info_display"></p>
+  <input type="submit" id="series_create_submit" class="submit_b" value="Create">
 </form>`;
 
 const article_page = `
@@ -116,4 +125,15 @@ const articles_list = `
 
 const category_page = `
 <table id="category_page">
+</table>`;
+
+const series_page = `
+<div class="series_page" style="width: 50%;">
+<p><b>Name:</b></p>
+<p id="name"></p>
+<p style="display: inline;"id="info_display"></p>
+</div>`;
+
+const series_list = `
+<table id="series_list">
 </table>`;
