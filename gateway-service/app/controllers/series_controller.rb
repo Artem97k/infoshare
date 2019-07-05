@@ -3,7 +3,7 @@ class SeriesController < ApplicationController
 
 	def create
 		RestClient.post(@@service_url + 'create',
-						{ token: session[:token],
+						{ token: params[:token],
 						  name: params[:name],
 						  avatar_id: params[:avatar_id] } ) do |response, request, result|
 			@r = response
@@ -20,7 +20,7 @@ class SeriesController < ApplicationController
 
 	def update
 		RestClient.put(@@service_url + 'update',
-						{ token: session[:token],
+						{ token: params[:token],
 						  name: params[:name],
 						  avatar_id: params[:avatar_id] } ) do |response, request, result|
 			@r = response
@@ -30,7 +30,7 @@ class SeriesController < ApplicationController
 
 	def delete
 		RestClient.post(@@service_url + 'delete',
-						{ token: session[:token],
+						{ token: params[:token],
 						  id: params[:id] } ) do |response, request, result|
 			@r = response
 		end

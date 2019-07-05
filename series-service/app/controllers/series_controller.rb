@@ -14,10 +14,22 @@ class SeriesController < ApplicationController
 		@user_id = @token['id']
 	end
 
+	def params_for_update
+		res = Hash.new
+		params.each { |key, value| if value != nil then res[key] = value end }
+		res.except!('token', 'controller', 'action')
+	end
+
+	def params_for_create
+		res = Hash.new
+		params.each { |key, value| if value != nil then res[key] = value end }
+		##res['content'].gsub!(/(?:\n\r?|\r\n?)/, '<br>');
+		res.update( { user_id: @user_id, login: @login } )
+		res.except!('token', 'controller', 'action')
+	end
+
 	def create
-		@series = Series.new( user_id: @user_id,
-					  		  name: params[:name],
-					 		  avatar_id: params[:avatar_id] )
+		@series = Series.new(params_for_create)
 		if @series.save
 			render json: { user_id: @user_id,
 					  	   name: params[:name],
@@ -44,8 +56,7 @@ class SeriesController < ApplicationController
 	def update
 		if @series = Series.find_by(id: params[:id])
 			if @series.user_id == @user_id
-				if @series.update( name: params[:name],
-					 			   avatar_id: params[:avatar_id] )
+				if @series.update(params_for_update)
 					render json: { status: 'Ok' }
 				else
 					render json: { status: "Series was not updated",
@@ -77,6 +88,6 @@ class SeriesController < ApplicationController
 	end
 
 	def profile_params
-		params.permit(:token, :id, :name, :avatar_id )
+		params.permit(:token, :id, :name, :avatar_id, :login)
 	end
 end

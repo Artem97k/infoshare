@@ -64,8 +64,10 @@ class ProfilesController < ApplicationController
 		if @profile = Profile.find_by(user_id: @user_id)
 			if @profile.user_id == @user_id
 				if @profile.update(params_for_update)
-					render json: { name: @profile.name, 
-						    	   surname: @profile.surname, 
+					render json: { user_id: @profile.user_id,
+								   login: @profile.login,
+								   name: @profile.name, 
+						    	   surname: @profile.surname,
 						   		   email: @profile.email, 
 						   		   bio: @profile.bio,
 						   		   avatar_id: @profile.avatar_id,

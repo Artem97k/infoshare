@@ -25,7 +25,7 @@ td.cat {
   cursor: pointer;
 }
 
-td.cat:hover {
+td.cat:hover, a.tile:hover{
   background-color: #f2f2f2;
 }
 
@@ -67,10 +67,9 @@ input.submit_b:hover {
 
 .content .tile {
   text-align: center;
-  color: white;
-  background-color: #137af7;
+  color: black;
+  background-color: #ebebeb;
   border: solid #333 2px;
-  border-radius: 10px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   padding: 5%;
