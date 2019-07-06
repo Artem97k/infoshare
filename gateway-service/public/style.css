@@ -93,7 +93,7 @@ input.submit_b:hover {
   cursor: pointer;
 }
 
-.article_link {
+.article_link, .series_link {
   text-align: center;
   color: black;
   background-color: #ebebeb;
@@ -105,31 +105,11 @@ input.submit_b:hover {
   cursor: pointer;
 }
 
-.series_link {
-  text-align: center;
-  color: black;
-  background-color: #ebebeb;
-  border: solid #333 2px;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 1%;
-  margin-left: 1%;
-  margin-right: 1%;
-  cursor: pointer;
-}
-
-.article_link:hover {
+.article_link:hover, .profile_link:hover, .series_link:hover {
   background-color: #f2f2f2;
 }
 
-.profile_link:hover {
-  background-color: #f2f2f2;
-}
-
-.series_link:hover {
-  background-color: #f2f2f2;
-}
-
-.profile_form {
+.profile_form, .series_form {
   margin-top: 1%;
   margin-left: 1%;
   margin-bottom: 1%;
@@ -139,10 +119,6 @@ input.submit_b:hover {
   margin: 0 auto;
   width: 50%;
   padding: 5%;
-}
-
-#profile_edit {
-  width: 50%;
 }
 
 #search_display {

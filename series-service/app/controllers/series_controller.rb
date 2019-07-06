@@ -32,10 +32,10 @@ class SeriesController < ApplicationController
 		@series = Series.new(params_for_create)
 		if @series.save
 			render json: { id: @series.id,
-				           user_id: @user_id,
-						   login: @login,
-					  	   name: params[:name],
-					 	   avatar_id: params[:avatar_id],
+				           user_id: @series.user_id,
+						   login: @series.login,
+					  	   name: @series.name,
+					 	   avatar_id: @series.avatar_id,
 						   status: "Ok" }
 		else
 			render json: { status: "New series was not created",

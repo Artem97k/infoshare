@@ -58,25 +58,25 @@ function set_profile_page(profile_data, page_form) {
   if ( localStorage.getItem('login') === profile_data.login ) {
     page.find(".profile_form").append('<input type="submit" id="profile_edit" class="submit_b" value="Edit profile info" style="width: 100%;">');
   }
-  page.append('<table style="width: 100%"><tr><td id="articles"></td><td id="series"></td></tr></table>');
+  page.append('<table style="width: 100%"><tr><td valign="top"id="series"></td></tr><tr><td valign="top" id="articles"></td></tr></table>');
   $.post({ url: "series/author",
                data: { user_id: profile_data.user_id },
                success: function (data) {
-                 $("#series").append('<p><b>Series:</b></p>');
+                 page.find("#series").append('<p><b>Series:</b></p>');
                  if ( data.status !== "Ok" && data[data.length-1] === undefined ) {
-                   $(".profile_page").append("<p>No published series yet!</p>");
+                   page.find("#series").append("<p>No published series yet!</p>");
                  } else {
                    if ( data[data.length-1].status === "Ok" ) {
                      data.splice(-1,1);
                      if ( data.length !== 0 ) {
                        let list = set_series_list(data, series_list);
-                       $("#series").append(list); 
+                       page.find("#series").append(list); 
                      } else {
-                       $(".profile_page").append("<p>No published series yet!</p>");
+                       page.find("#series").append("<p>No published series yet!</p>");
                      }
                    } else {
-                     $("#info_display").attr("style", "color: red;");
-                     $("#info_display").text( data.error );
+                     page.find("#info_display").attr("style", "color: red;");
+                     page.find("#info_display").text( data.error );
                    }
                  }
                },
@@ -87,21 +87,21 @@ function set_profile_page(profile_data, page_form) {
   $.post({ url: "article/author",
                data: { user_id: profile_data.user_id },
                success: function (data) {
-                 $("#articles").append('<p><b>Articles:</b></p>');
+                 page.find("#articles").append('<p><b>Articles:</b></p>');
                  if ( data.status !== "Ok" && data[data.length-1] === undefined ) {
-                   $(".profile_page").append("<p>No published articles yet!</p>");
+                   page.find("#articles").append("<p>No published articles yet!</p>");
                  } else {
                    if ( data[data.length-1].status === "Ok" ) {
                      data.splice(-1,1);
                      if ( data.length !== 0 ) {
                        let list = set_articles_list(data, articles_list);
-                       $("#articles").append(list); 
+                       page.find("#articles").append(list); 
                      } else {
-                       $(".profile_page").append("<p>No published articles yet!</p>");
+                       page.find("#articles").append("<p>No published articles yet!</p>");
                      }
                    } else {
-                     $("#info_display").attr("style", "color: red;");
-                     $("#info_display").text( data.error );
+                     page.find("#info_display").attr("style", "color: red;");
+                     page.find("#info_display").text( data.error );
                    }
                  }
                },

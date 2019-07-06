@@ -46,6 +46,6 @@ class SeriesController < ApplicationController
 						  id: params[:id] } ) do |response, request, result|
 			@r2 = response
 		end
-		render json:
+		render json:  [ JSON.parse(@r1), JSON.parse(@r2) ]
 	end
 end

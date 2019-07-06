@@ -128,10 +128,11 @@ const category_page = `
 </table>`;
 
 const series_page = `
-<div class="series_page" style="width: 50%;">
-<p><b>Name:</b></p>
-<p id="name"></p>
-<p style="display: inline;"id="info_display"></p>
+<div class="series_page" style="width: 75%;">
+<form class="series_form">
+<p style="display: inline;"><b>Name: </b></p><p style="display: inline;" id="name"></p>
+<p style="display: inline;" id="info_display"></p><br><br>
+</form>
 </div>`;
 
 const series_list = `

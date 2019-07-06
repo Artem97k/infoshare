@@ -30,7 +30,8 @@ class ArticlesController < ApplicationController
 	def create
 		@article = Article.new(params_for_create)
 		if @article.save
-			render json: { user_id: @user_id,
+			render json: { id: @article.id,
+				           user_id: @article.user_id,
 						   login: @article.login,
 						   series_id: @article.series_id,
 					  	   name: @article.name,
@@ -46,6 +47,7 @@ class ArticlesController < ApplicationController
 	def read
 		if @article = Article.find_by(id: params[:id])
 			render json: { id: @article.id,
+				 		   user_id: @article.user_id,
 				           login: @article.login,
 				           series_id: @article.series_id,
 						   name: @article.name,

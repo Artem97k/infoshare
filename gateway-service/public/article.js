@@ -17,9 +17,6 @@ $(document).on( "click", "#article_create_submit", function() {
                $("#main").empty();
                let page = set_article_page(data, article_page);
                $("#main").prepend(page);
-               //let cont = $("#content").html();
-               //cont = cont.replace(/(?:\r\n|\r|\n)/g, '<br>');
-               //$("#content").text(cont);
              } else {
                $("#info_display").attr("style", "color: red;");
                $("#info_display").text( data.error );
@@ -44,7 +41,7 @@ function set_article_page(article_data, page_form) {
 
 $(document).on( "click", ".article_delete", function() {
   $.ajax({ url: "article/delete",
-           method: "POST",
+           method: "DELETE",
            data: { token: localStorage.getItem('token'),
                    id: $(this).attr("id") 
            },

@@ -14,9 +14,6 @@ $(document).on( "click", "#series_create_submit", function() {
                $("#main").empty();
                let page = set_series_page(data, series_page);
                $("#main").prepend(page);
-               //let cont = $("#content").html();
-               //cont = cont.replace(/(?:\r\n|\r|\n)/g, '<br>');
-               //$("#content").text(cont);
              } else {
                $("#info_display").attr("style", "color: red;");
                $("#info_display").text( data.error );
@@ -32,17 +29,15 @@ function set_series_page(series_data, page_form) {
   let page = $(page_form);
   page.find("#name").text(series_data.name);
   if ( localStorage.getItem('login') === series_data.login ) {
-    page.append(`<input type="submit" id="${series_data.id}" class="submit_b series_delete" value="Delete series" style="width: 50%;"><br>`);
+    page.find(".series_form").append(`<input type="submit" id="${series_data.id}" class="submit_b series_delete" value="Delete series" style="width: 100%;"><br>`);
+    page.append(`<input type="submit" id="${series_data.id}" class="submit_b article_create" value="Add article" style="width: 35%;">`);
   }
   page.append('<p><b>Articles:</b></p>');
-  if ( localStorage.getItem('login') === series_data.login ) {
-    page.append(`<input type="submit" id="${series_data.id}" class="submit_b article_create" value="Add article" style="width: 50%;"><br><br>`);
-  }
   $.post({ url: "article/series",
                data: { series_id: series_data.id },
                success: function (data) {
                  if ( data.status !== "Ok" && data[data.length-1] === undefined ) {
-                   $(".series_page").append("<p>No published articles yet!</p>");
+                   page.append("<p>No published articles yet!</p>");
                  } else {
                    if ( data[data.length-1].status === "Ok" ) {
                      data.splice(-1,1);
@@ -50,11 +45,11 @@ function set_series_page(series_data, page_form) {
                        let list = set_articles_list(data, articles_list);
                        page.append(list);
                      } else {
-                       $(".series_page").append("<p>No published articles yet!</p>");
+                       page.append("<p>No published articles yet!</p>");
                      }
                    } else {
-                     $("#info_display").attr("style", "color: red;");
-                     $("#info_display").text( data.error );
+                     page.find("#info_display").attr("style", "color: red;");
+                     page.find("#info_display").text( data.error );
                    }
                  }
                },
@@ -66,13 +61,14 @@ function set_series_page(series_data, page_form) {
 }
 
 $(document).on( "click", ".series_delete", function() {
+  event.preventDefault();
   $.ajax({ url: "series/delete",
-           method: "POST",
+           method: "DELETE",
            data: { token: localStorage.getItem('token'),
                    id: $(this).attr("id"),
            },
            success: function (data) {
-             if ( data.article === "Ok" && data.series === "Ok" ) {
+             if ( data[0].status === "Ok" || data[1].status === "Ok" ) {
                $("#main").empty();
                $("#main").append('<p style="color: green;">Deleted successfully!</p>');
              } else {
