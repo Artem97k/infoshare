@@ -102,7 +102,7 @@ const ar_create_form = `
 
 const sr_create_form = `
 <form id="sr_create_form" style="width: 50%; margin-top: 10%;">
-  Name<br>
+  Name:<br>
   <input type="text" id="name"><br>
   <p style="display: inline;"id="info_display"></p>
   <input type="submit" id="series_create_submit" class="submit_b" value="Create">
