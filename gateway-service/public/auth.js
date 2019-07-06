@@ -67,7 +67,6 @@ $(document).on("click", "#signin_submit", function(){
                   $("#username").attr("class", "auth");
       	      	  localStorage.setItem('token', data.token);
       	      	  localStorage.setItem('login', data.login);
-                  localStorage.setItem('user_id', data.user_id);
                   $("#main").empty();
       	        } else {
                   $("#info_display").attr("style", "color: red;");
