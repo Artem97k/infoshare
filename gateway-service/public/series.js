@@ -68,7 +68,7 @@ $(document).on( "click", ".series_delete", function() {
                    id: $(this).attr("id"),
            },
            success: function (data) {
-             if ( data[0].status === "Ok" || data[1].status === "Ok" ) {
+             if ( data[0].status === "Ok" && data[1].status === "Ok" ) {
                $("#main").empty();
                $("#main").append('<p style="color: green;">Deleted successfully!</p>');
              } else {
